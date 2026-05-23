@@ -3,71 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Catàleg Biblioteca EOI Sant Cugat</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#F0F4F8;color:#1A1A2E}
-header{background:linear-gradient(135deg,#1A3C5E,#243447);color:#fff;padding:20px;text-align:center}
-header h1{font-size:1.8em;margin-bottom:4px}
-header p{opacity:.8;font-size:.95em}
-.controls{background:#fff;padding:14px 20px;border-bottom:1px solid #E2E8F0;position:sticky;top:0;z-index:100;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.controls input{flex:1;min-width:180px;padding:9px 14px;border:1px solid #CBD5E0;border-radius:8px;font-size:.95em}
-.controls select{padding:9px 12px;border:1px solid #CBD5E0;border-radius:8px;font-size:.9em;background:#fff;cursor:pointer}
-.info-bar{padding:10px 20px;background:#EFF6FF;border-bottom:1px solid #BFDBFE;font-size:.9em;color:#1E40AF}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding:20px}
-.card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid #E2E8F0;transition:box-shadow .2s}
-.card:hover{box-shadow:0 4px 16px rgba(0,0,0,.12)}
-.card-ref{font-size:.75em;color:#94A3B8;margin-bottom:6px;font-family:monospace}
-.card-title{font-weight:700;font-size:1em;margin-bottom:4px;line-height:1.3;color:#1A3C5E}
-.card-author{font-size:.85em;color:#64748B;margin-bottom:10px}
-.badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.badge{padding:3px 8px;border-radius:12px;font-size:.75em;font-weight:600}
-.badge-idioma{background:#DBEAFE;color:#1D4ED8}
-.badge-nivell{background:#EDE9FE;color:#6D28D9}
-.badge-genere{background:#FEF3C7;color:#92400E}
-.badge-ok{background:#D1FAE5;color:#065F46}
-.badge-prestat{background:#FEE2E2;color:#991B1B}
-.badge-audio{background:#E0F2FE;color:#0369A1;cursor:default}
-.badge-sub{background:#F0FDF4;color:#166534;cursor:default}
-.card-btn{width:100%;padding:8px;background:#2563EB;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.9em;font-weight:600;transition:background .2s}
-.card-btn:hover:not(:disabled){background:#1D4ED8}
-.card-btn:disabled{background:#CBD5E0;cursor:not-allowed}
-.pagination{display:flex;justify-content:center;align-items:center;gap:12px;padding:20px;flex-wrap:wrap}
-.pagination button{padding:8px 18px;border:1px solid #CBD5E0;border-radius:8px;background:#fff;cursor:pointer;font-size:.9em}
-.pagination button:hover:not(:disabled){background:#EFF6FF}
-.pagination button:disabled{opacity:.4;cursor:not-allowed}
-.pagination span{font-size:.9em;color:#64748B}
-#status{padding:30px;text-align:center;color:#64748B;font-size:1.1em}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;justify-content:center;align-items:center}
-.modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:16px;padding:28px;width:90%;max-width:460px;max-height:90vh;overflow-y:auto}
-.modal h2{margin-bottom:6px;color:#1A3C5E;font-size:1.2em}
-.modal .book-info{background:#F8FAFC;border-radius:8px;padding:10px 14px;margin-bottom:18px;font-size:.9em;color:#475569}
-.modal label{display:block;margin-bottom:4px;font-size:.85em;font-weight:600;color:#374151}
-.modal input,.modal select,.modal textarea{width:100%;padding:9px 12px;border:1px solid #CBD5E0;border-radius:8px;margin-bottom:12px;font-size:.9em;font-family:inherit;background:#fff}
-.modal textarea{height:70px;resize:vertical}
-.modal-btns{display:flex;gap:10px;margin-top:6px}
-.modal-btns button{flex:1;padding:10px;border:none;border-radius:8px;cursor:pointer;font-size:.95em;font-weight:600}
-.btn-cancel{background:#F1F5F9;color:#374151}
-.btn-send{background:#2563EB;color:#fff}
-.btn-send:hover{background:#1D4ED8}
-.btn-cancel:hover{background:#E2E8F0}
-#ttip{position:fixed;background:#1A3C5E;color:#fff;padding:7px 12px;border-radius:8px;font-size:.82em;line-height:1.4;max-width:260px;text-align:center;pointer-events:none;display:none;z-index:9999;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#F0F4F8;
+  color:#1A1A2E
+}
+
+header{
+  background:linear-gradient(135deg,#1A3C5E,#243447);
+  color:#fff;
+  padding:20px;
+  text-align:center
+}
+
+header h1{
+  font-size:1.8em;
+  margin-bottom:4px
+}
+
+header p{
+  opacity:.8;
+  font-size:.95em
+}
+
+.controls{
+  background:#fff;
+  padding:14px 20px;
+  border-bottom:1px solid #E2E8F0;
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center
+}
+
+.controls input{
+  flex:1;
+  min-width:180px;
+  padding:9px 14px;
+  border:1px solid #CBD5E0;
+  border-radius:8px;
+  font-size:.95em
+}
+
+.controls select{
+  padding:9px 12px;
+  border:1px solid #CBD5E0;
+  border-radius:8px;
+  font-size:.9em;
+  background:#fff;
+  cursor:pointer
+}
+
+.info-bar{
+  padding:10px 20px;
+  background:#EFF6FF;
+  border-bottom:1px solid #BFDBFE;
+  font-size:.9em;
+  color:#1E40AF
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+  padding:20px
+}
+
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 1px 4px rgba(0,0,0,.08);
+  border:1px solid #E2E8F0;
+  transition:box-shadow .2s
+}
+
+.card:hover{
+  box-shadow:0 4px 16px rgba(0,0,0,.12)
+}
+
+.card-ref{
+  font-size:.75em;
+  color:#94A3B8;
+  margin-bottom:6px;
+  font-family:monospace
+}
+
+.card-title{
+  font-weight:700;
+  font-size:1em;
+  margin-bottom:4px;
+  line-height:1.3;
+  color:#1A3C5E
+}
+
+.card-author{
+  font-size:.85em;
+  color:#64748B;
+  margin-bottom:10px
+}
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:12px
+}
+
+.badge{
+  padding:3px 8px;
+  border-radius:12px;
+  font-size:.75em;
+  font-weight:600
+}
+
+.badge-idioma{
+  background:#DBEAFE;
+  color:#1D4ED8
+}
+
+.badge-nivell{
+  background:#EDE9FE;
+  color:#6D28D9
+}
+
+.badge-genere{
+  background:#FEF3C7;
+  color:#92400E
+}
+
+.badge-ok{
+  background:#D1FAE5;
+  color:#065F46
+}
+
+.badge-prestat{
+  background:#FEE2E2;
+  color:#991B1B
+}
+
+.badge-audio{
+  background:#E0F2FE;
+  color:#0369A1;
+  cursor:default
+}
+
+.badge-sub{
+  background:#F0FDF4;
+  color:#166534;
+  cursor:default
+}
+
+.card-btn{
+  width:100%;
+  padding:8px;
+  background:#2563EB;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:.9em;
+  font-weight:600;
+  transition:background .2s
+}
+
+.card-btn:hover:not(:disabled){
+  background:#1D4ED8
+}
+
+.card-btn:disabled{
+  background:#CBD5E0;
+  cursor:not-allowed
+}
+
+.pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  padding:20px;
+  flex-wrap:wrap
+}
+
+.pagination button{
+  padding:8px 18px;
+  border:1px solid #CBD5E0;
+  border-radius:8px;
+  background:#fff;
+  cursor:pointer;
+  font-size:.9em
+}
+
+.pagination button:hover:not(:disabled){
+  background:#EFF6FF
+}
+
+.pagination button:disabled{
+  opacity:.4;
+  cursor:not-allowed
+}
+
+.pagination span{
+  font-size:.9em;
+  color:#64748B
+}
+
+#status{
+  padding:30px;
+  text-align:center;
+  color:#64748B;
+  font-size:1.1em
+}
+
+.modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:1000;
+  justify-content:center;
+  align-items:center
+}
+
+.modal-overlay.open{
+  display:flex
+}
+
+.modal{
+  background:#fff;
+  border-radius:16px;
+  padding:28px;
+  width:90%;
+  max-width:460px;
+  max-height:90vh;
+  overflow-y:auto
+}
+
+.modal h2{
+  margin-bottom:6px;
+  color:#1A3C5E;
+  font-size:1.2em
+}
+
+.modal .book-info{
+  background:#F8FAFC;
+  border-radius:8px;
+  padding:10px 14px;
+  margin-bottom:18px;
+  font-size:.9em;
+  color:#475569
+}
+
+.modal label{
+  display:block;
+  margin-bottom:4px;
+  font-size:.85em;
+  font-weight:600;
+  color:#374151
+}
+
+.modal input,
+.modal select,
+.modal textarea{
+  width:100%;
+  padding:9px 12px;
+  border:1px solid #CBD5E0;
+  border-radius:8px;
+  margin-bottom:12px;
+  font-size:.9em;
+  font-family:inherit;
+  background:#fff
+}
+
+.modal textarea{
+  height:70px;
+  resize:vertical
+}
+
+.modal-btns{
+  display:flex;
+  gap:10px;
+  margin-top:6px
+}
+
+.modal-btns button{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:.95em;
+  font-weight:600
+}
+
+.btn-cancel{
+  background:#F1F5F9;
+  color:#374151
+}
+
+.btn-send{
+  background:#2563EB;
+  color:#fff
+}
+
+.btn-send:hover{
+  background:#1D4ED8
+}
+
+.btn-cancel:hover{
+  background:#E2E8F0
+}
+
+#ttip{
+  position:fixed;
+  background:#1A3C5E;
+  color:#fff;
+  padding:7px 12px;
+  border-radius:8px;
+  font-size:.82em;
+  line-height:1.4;
+  max-width:260px;
+  text-align:center;
+  pointer-events:none;
+  display:none;
+  z-index:9999;
+  box-shadow:0 3px 10px rgba(0,0,0,.3)
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <h1>📚 Biblioteca EOI Sant Cugat</h1>
+  <h1>Biblioteca EOI Sant Cugat</h1>
   <p>Catàleg de préstec</p>
 </header>
 
 <div class="controls">
-  <input type="text" id="cercaTitol" placeholder="Cerca per títol..." oninput="filtrar()">
-  <input type="text" id="cercaAutor" placeholder="Cerca per autor..." oninput="filtrar()">
-  <select id="filtreIdioma" onchange="filtrar()"><option value="">Tots els idiomes</option></select>
-  <select id="filtreNivell" onchange="filtrar()"><option value="">Tots els nivells</option></select>
-  <select id="filtreGenere" onchange="filtrar()"><option value="">Tots els gèneres</option></select>
+  <input type="text" id="cercaTitol" placeholder="Cerca per títol..." oninput="filtrarAmbRetard()">
+  <input type="text" id="cercaAutor" placeholder="Cerca per autor..." oninput="filtrarAmbRetard()">
+
+  <select id="filtreIdioma" onchange="filtrar()">
+    <option value="">Tots els idiomes</option>
+  </select>
+
+  <select id="filtreNivell" onchange="filtrar()">
+    <option value="">Tots els nivells</option>
+  </select>
+
+  <select id="filtreGenere" onchange="filtrar()">
+    <option value="">Tots els gèneres</option>
+  </select>
+
   <select id="filtreDisp" onchange="filtrar()">
     <option value="">Tots</option>
     <option value="1">Disponibles</option>
@@ -75,18 +371,25 @@ header p{opacity:.8;font-size:.95em}
   </select>
 </div>
 
-<div class="info-bar" id="infoBar">Carregant...</div>
-<div id="status">⏳ Carregant el catàleg...</div>
+<div class="info-bar" id="infoBar">Carregant dades...</div>
+
+<div id="status">⏳ Carregant el catàleg. Pot trigar uns segons...</div>
+
 <div class="grid" id="grid"></div>
+
 <div class="pagination" id="pagination"></div>
+
 <div id="ttip"></div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2>Sol·licitar préstec</h2>
+
     <div class="book-info" id="modalBookInfo"></div>
+
     <label>Nom i cognoms *</label>
     <input type="text" id="mNom" placeholder="Anna García López">
+
     <label>Curs *</label>
     <select id="mCurs">
       <option value="">— Selecciona el teu curs —</option>
@@ -95,12 +398,16 @@ header p{opacity:.8;font-size:.95em}
       <option value="B1">B1</option>
       <option value="B2.1">B2.1</option>
     </select>
+
     <label>Email de contacte *</label>
     <input type="email" id="mEmail" placeholder="alumne@exemple.com">
+
     <label>Telèfon de contacte *</label>
     <input type="tel" id="mTel" placeholder="600 123 456">
+
     <label>Observacions</label>
     <textarea id="mObs" placeholder="Opcional..."></textarea>
+
     <div class="modal-btns">
       <button class="btn-cancel" onclick="tancarModal()">Cancel·lar</button>
       <button class="btn-send" id="btnEnviar" onclick="enviarSollicitud()">Enviar sol·licitud</button>
@@ -111,147 +418,328 @@ header p{opacity:.8;font-size:.95em}
 <script>
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVbR-7FGuqdNFSG20lRq2ZAMuwjbsDCIO4A97w_SMur_kwYiCFMn8Wtl7fL0PlI-5b/exec';
 
-var TOTS = [], FILTRATS = [], PAGINA = 1, PER_PAGINA = 50, LLIBRE_SELECCIONAT = null;
+var TOTS = [];
+var FILTRATS = [];
+var PAGINA = 1;
+var PER_PAGINA = 50;
+var LLIBRE_SELECCIONAT = null;
+
+var CACHE_KEY = 'biblioteca_eoi_cataleg_v1';
+var CACHE_DATE_KEY = 'biblioteca_eoi_cataleg_data_v1';
+var TEMPS_MAXIM_CARREGA = 20000;
+var timerFiltre = null;
+
+// ── Utilitats visuals ───────────────────────────────────────
+
+function mostrarStatus(text) {
+  var status = document.getElementById('status');
+  status.style.display = 'block';
+  status.textContent = text;
+}
+
+function amagarStatus() {
+  document.getElementById('status').style.display = 'none';
+}
+
+function posarInfo(text) {
+  document.getElementById('infoBar').textContent = text;
+}
 
 // ── Tooltip ─────────────────────────────────────────────────
+
 var ttip = document.getElementById('ttip');
+
 document.addEventListener('mouseover', function(e) {
   var txt = e.target.getAttribute && e.target.getAttribute('data-tooltip');
-  if (txt) { ttip.textContent = txt; ttip.style.display = 'block'; }
-});
-document.addEventListener('mousemove', function(e) {
-  if (ttip.style.display === 'block') {
-    var x = e.clientX, vw = window.innerWidth, tw = ttip.offsetWidth;
-    x = x - tw/2;
-    if (x + tw + 8 > vw) x = vw - tw - 8;
-    if (x < 8) x = 8;
-    ttip.style.left = x + 'px';
-    ttip.style.top  = (e.clientY - ttip.offsetHeight - 14) + 'px';
+  if (txt) {
+    ttip.textContent = txt;
+    ttip.style.display = 'block';
   }
 });
+
+document.addEventListener('mousemove', function(e) {
+  if (ttip.style.display === 'block') {
+    var x = e.clientX;
+    var vw = window.innerWidth;
+    var tw = ttip.offsetWidth;
+
+    x = x - tw / 2;
+
+    if (x + tw + 8 > vw) x = vw - tw - 8;
+    if (x < 8) x = 8;
+
+    ttip.style.left = x + 'px';
+    ttip.style.top = (e.clientY - ttip.offsetHeight - 14) + 'px';
+  }
+});
+
 document.addEventListener('mouseout', function(e) {
-  if (e.target.getAttribute && e.target.getAttribute('data-tooltip')) ttip.style.display = 'none';
+  if (e.target.getAttribute && e.target.getAttribute('data-tooltip')) {
+    ttip.style.display = 'none';
+  }
 });
 
 // ── Càrrega del catàleg ──────────────────────────────────────
-fetch(SCRIPT_URL + '?action=cataleg')
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    if (!data || !data.length) {
-      document.getElementById('status').textContent = 'No s\'han trobat llibres.';
-      return;
-    }
-    TOTS = data;
-    document.getElementById('status').style.display = 'none';
-    omplirFiltres();
-    filtrar();
-  })
-  .catch(function(err) {
-    document.getElementById('status').textContent = '❌ Error carregant el catàleg: ' + err;
+// Millora: missatges clars, timeout i memòria local.
+// Si el navegador ja té una còpia guardada, es mostra ràpid i després intenta actualitzar.
+
+function fetchAmbTimeout(url, ms) {
+  return new Promise(function(resolve, reject) {
+    var timer = setTimeout(function() {
+      reject(new Error('Temps d’espera superat carregant el catàleg.'));
+    }, ms);
+
+    fetch(url)
+      .then(function(response) {
+        clearTimeout(timer);
+        resolve(response);
+      })
+      .catch(function(error) {
+        clearTimeout(timer);
+        reject(error);
+      });
   });
+}
+
+function guardarCatalegEnCache(data) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    localStorage.setItem(CACHE_DATE_KEY, new Date().toISOString());
+  } catch (e) {
+    console.warn('No s’ha pogut guardar el catàleg en memòria local:', e);
+  }
+}
+
+function carregarCatalegDeCache() {
+  try {
+    var raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return false;
+
+    var data = JSON.parse(raw);
+    if (!data || !data.length) return false;
+
+    aplicarCataleg(data, 'cache');
+    return true;
+  } catch (e) {
+    console.warn('No s’ha pogut llegir el catàleg guardat:', e);
+    return false;
+  }
+}
+
+function aplicarCataleg(data, origen) {
+  if (!data || !data.length) {
+    mostrarStatus('No s’han trobat llibres.');
+    posarInfo('No hi ha dades disponibles.');
+    return;
+  }
+
+  TOTS = data;
+  amagarStatus();
+  omplirFiltres();
+  filtrar();
+
+  if (origen === 'cache') {
+    posarInfo('Mostrant el catàleg guardat. Actualitzant dades...');
+  }
+}
+
+function carregarCatalegDesDelServidor(teniaCache) {
+  if (!teniaCache) {
+    mostrarStatus('⏳ Carregant el catàleg. Pot trigar uns segons...');
+    posarInfo('Carregant dades...');
+  }
+
+  fetchAmbTimeout(SCRIPT_URL + '?action=cataleg', TEMPS_MAXIM_CARREGA)
+    .then(function(r) {
+      if (!r.ok) {
+        throw new Error('Resposta del servidor no vàlida: ' + r.status);
+      }
+      return r.json();
+    })
+    .then(function(data) {
+      guardarCatalegEnCache(data);
+      aplicarCataleg(data, 'servidor');
+    })
+    .catch(function(err) {
+      if (teniaCache) {
+        amagarStatus();
+        posarInfo('Mostrant el catàleg guardat. No s’ha pogut actualitzar ara mateix.');
+      } else {
+        mostrarStatus('❌ El catàleg està trigant massa a carregar. Actualitza la pàgina o torna-ho a provar en uns segons.');
+        posarInfo('No s’ha pogut carregar el catàleg.');
+        console.error('Error carregant el catàleg:', err);
+      }
+    });
+}
+
+var teniaCache = carregarCatalegDeCache();
+carregarCatalegDesDelServidor(teniaCache);
 
 function omplirFiltres() {
-  var idiomes = [], nivells = [], generes = [];
+  var idiomes = [];
+  var nivells = [];
+  var generes = [];
+
   TOTS.forEach(function(b) {
     if (b.idioma && b.idioma.indexOf('@') < 0 && idiomes.indexOf(b.idioma) < 0) idiomes.push(b.idioma);
     if (b.nivell && b.nivell.indexOf('@') < 0 && nivells.indexOf(b.nivell) < 0) nivells.push(b.nivell);
     if (b.genere && b.genere.indexOf('@') < 0 && generes.indexOf(b.genere) < 0) generes.push(b.genere);
   });
-  idiomes.sort(); nivells.sort(); generes.sort();
+
+  idiomes.sort();
+  nivells.sort();
+  generes.sort();
+
   var fI = document.getElementById('filtreIdioma');
   var fN = document.getElementById('filtreNivell');
   var fG = document.getElementById('filtreGenere');
-  idiomes.forEach(function(v){ fI.innerHTML += '<option value="'+v+'">'+v+'</option>'; });
-  nivells.forEach(function(v){ fN.innerHTML += '<option value="'+v+'">'+v+'</option>'; });
-  generes.forEach(function(v){ fG.innerHTML += '<option value="'+v+'">'+v+'</option>'; });
+
+  var valorIdioma = fI.value;
+  var valorNivell = fN.value;
+  var valorGenere = fG.value;
+
+  fI.innerHTML = '<option value="">Tots els idiomes</option>';
+  fN.innerHTML = '<option value="">Tots els nivells</option>';
+  fG.innerHTML = '<option value="">Tots els gèneres</option>';
+
+  idiomes.forEach(function(v) {
+    fI.innerHTML += '<option value="' + esc(v) + '">' + esc(v) + '</option>';
+  });
+
+  nivells.forEach(function(v) {
+    fN.innerHTML += '<option value="' + esc(v) + '">' + esc(v) + '</option>';
+  });
+
+  generes.forEach(function(v) {
+    fG.innerHTML += '<option value="' + esc(v) + '">' + esc(v) + '</option>';
+  });
+
+  if (valorIdioma) fI.value = valorIdioma;
+  if (valorNivell) fN.value = valorNivell;
+  if (valorGenere) fG.value = valorGenere;
+}
+
+// ── Filtres i renderitzat ────────────────────────────────────
+
+function filtrarAmbRetard() {
+  clearTimeout(timerFiltre);
+  timerFiltre = setTimeout(function() {
+    filtrar();
+  }, 250);
 }
 
 function filtrar() {
   if (!TOTS.length) return;
+
   var qT = document.getElementById('cercaTitol').value.toLowerCase().trim();
   var qA = document.getElementById('cercaAutor').value.toLowerCase().trim();
   var iI = document.getElementById('filtreIdioma').value;
   var iN = document.getElementById('filtreNivell').value;
   var iG = document.getElementById('filtreGenere').value;
   var iD = document.getElementById('filtreDisp').value;
+
   FILTRATS = TOTS.filter(function(b) {
-    if (qT && b.titol.toLowerCase().indexOf(qT) < 0) return false;
-    if (qA && b.autor.toLowerCase().indexOf(qA) < 0) return false;
+    var titol = String(b.titol || '').toLowerCase();
+    var autor = String(b.autor || '').toLowerCase();
+
+    if (qT && titol.indexOf(qT) < 0) return false;
+    if (qA && autor.indexOf(qA) < 0) return false;
     if (iI && b.idioma !== iI) return false;
     if (iN && b.nivell !== iN) return false;
     if (iG && b.genere !== iG) return false;
     if (iD !== '' && String(b.disponible) !== iD) return false;
+
     return true;
   });
+
   PAGINA = 1;
   renderPagina();
 }
 
 function renderPagina() {
   var totalPag = Math.ceil(FILTRATS.length / PER_PAGINA) || 1;
-  var inici    = (PAGINA - 1) * PER_PAGINA;
-  var fi       = Math.min(inici + PER_PAGINA, FILTRATS.length);
-  var pag      = FILTRATS.slice(inici, fi);
+  var inici = (PAGINA - 1) * PER_PAGINA;
+  var fi = Math.min(inici + PER_PAGINA, FILTRATS.length);
+  var pag = FILTRATS.slice(inici, fi);
 
-  document.getElementById('infoBar').textContent =
-    'Mostrant ' + (FILTRATS.length ? (inici+1)+'–'+fi : 0) +
-    ' de ' + FILTRATS.length + ' resultats (total: ' + TOTS.length + ' llibres)';
+  posarInfo(
+    'Mostrant ' +
+    (FILTRATS.length ? (inici + 1) + '–' + fi : 0) +
+    ' de ' + FILTRATS.length +
+    ' resultats (total: ' + TOTS.length + ' llibres)'
+  );
 
   var grid = document.getElementById('grid');
   grid.innerHTML = '';
+
   if (!pag.length) {
-    grid.innerHTML = '<p style="padding:30px;color:#94A3B8;grid-column:1/-1">No s\'han trobat llibres amb aquests filtres.</p>';
+    grid.innerHTML = '<p style="padding:30px;color:#94A3B8;grid-column:1/-1">No s’han trobat llibres amb aquests filtres.</p>';
   } else {
     pag.forEach(function(b) {
       var disp = b.disponible === 1;
       var card = document.createElement('div');
+
       card.className = 'card';
+
       card.innerHTML =
-        '<div class="card-ref">Ref: '+esc(b.codi)+(b.copia?' · CD àudio: '+esc(b.copia):'')+'</div>'+
-        '<div class="card-title">'+esc(b.titol)+'</div>'+
-        '<div class="card-author">'+esc(b.autor)+(b.editorial?' · '+esc(b.editorial):'')+'</div>'+
-        '<div class="badges">'+
-          (b.idioma?'<span class="badge badge-idioma">'+esc(b.idioma)+'</span>':'')+
-          (b.nivell?'<span class="badge badge-nivell">'+esc(b.nivell)+'</span>':'')+
-          (b.genere?'<span class="badge badge-genere">'+esc(b.genere)+'</span>':'')+
-          '<span class="badge '+(disp?'badge-ok':'badge-prestat')+'">'+(disp?'✓ Disponible':'✗ En préstec')+'</span>'+
-          (b.audio?'<span class="badge badge-audio" data-tooltip="'+esc(b.audio)+'">🎧 Àudio</span>':'')+
-          (b.subtitols?'<span class="badge badge-sub" data-tooltip="'+esc(b.subtitols)+'">💬 Subtítols</span>':'')+
-        '</div>'+
-        '<button class="card-btn"'+(disp?'':' disabled')+' onclick=\'obrirModal('+JSON.stringify(b)+')\'>'+
-          (disp?'Sol·licitar préstec':'No disponible')+
+        '<div class="card-ref">Ref: ' + esc(b.codi) + (b.copia ? ' · CD àudio: ' + esc(b.copia) : '') + '</div>' +
+        '<div class="card-title">' + esc(b.titol) + '</div>' +
+        '<div class="card-author">' + esc(b.autor) + (b.editorial ? ' · ' + esc(b.editorial) : '') + '</div>' +
+        '<div class="badges">' +
+          (b.idioma ? '<span class="badge badge-idioma">' + esc(b.idioma) + '</span>' : '') +
+          (b.nivell ? '<span class="badge badge-nivell">' + esc(b.nivell) + '</span>' : '') +
+          (b.genere ? '<span class="badge badge-genere">' + esc(b.genere) + '</span>' : '') +
+          '<span class="badge ' + (disp ? 'badge-ok' : 'badge-prestat') + '">' + (disp ? '✓ Disponible' : '✗ En préstec') + '</span>' +
+          (b.audio ? '<span class="badge badge-audio" data-tooltip="' + esc(b.audio) + '">Àudio</span>' : '') +
+          (b.subtitols ? '<span class="badge badge-sub" data-tooltip="' + esc(b.subtitols) + '">Subtítols</span>' : '') +
+        '</div>' +
+        '<button class="card-btn"' + (disp ? '' : ' disabled') + ' onclick=\'obrirModal(' + JSON.stringify(b).replace(/'/g, '&#39;') + ')\'' + '>' +
+          (disp ? 'Sol·licitar préstec' : 'No disponible') +
         '</button>';
+
       grid.appendChild(card);
     });
   }
 
   var pDiv = document.getElementById('pagination');
+
   pDiv.innerHTML = totalPag <= 1 ? '' :
-    '<button onclick="canviaPagina(-1)"'+(PAGINA===1?' disabled':'')+'>← Anterior</button>'+
-    '<span>Pàgina '+PAGINA+' de '+totalPag+'</span>'+
-    '<button onclick="canviaPagina(1)"'+(PAGINA===totalPag?' disabled':'')+'>Següent →</button>';
+    '<button onclick="canviaPagina(-1)"' + (PAGINA === 1 ? ' disabled' : '') + '>← Anterior</button>' +
+    '<span>Pàgina ' + PAGINA + ' de ' + totalPag + '</span>' +
+    '<button onclick="canviaPagina(1)"' + (PAGINA === totalPag ? ' disabled' : '') + '>Següent →</button>';
 }
 
 function canviaPagina(dir) {
   var totalPag = Math.ceil(FILTRATS.length / PER_PAGINA) || 1;
   PAGINA = Math.max(1, Math.min(totalPag, PAGINA + dir));
   renderPagina();
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
 }
 
 function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
+
+// ── Modal de sol·licitud ─────────────────────────────────────
 
 function obrirModal(b) {
   LLIBRE_SELECCIONAT = b;
+
   document.getElementById('modalBookInfo').innerHTML =
-    '<strong>'+esc(b.titol)+'</strong><br>'+esc(b.autor)+'<br><small>Ref: '+esc(b.codi)+'</small>';
-  document.getElementById('mNom').value  = '';
+    '<strong>' + esc(b.titol) + '</strong><br>' +
+    esc(b.autor) +
+    '<br><small>Ref: ' + esc(b.codi) + '</small>';
+
+  document.getElementById('mNom').value = '';
   document.getElementById('mCurs').value = '';
-  document.getElementById('mEmail').value= '';
-  document.getElementById('mTel').value  = '';
-  document.getElementById('mObs').value  = '';
+  document.getElementById('mEmail').value = '';
+  document.getElementById('mTel').value = '';
+  document.getElementById('mObs').value = '';
+
   document.getElementById('modalOverlay').classList.add('open');
 }
 
@@ -261,32 +749,45 @@ function tancarModal() {
 }
 
 function enviarSollicitud() {
-  var nom   = document.getElementById('mNom').value.trim();
-  var curs  = document.getElementById('mCurs').value;
+  var nom = document.getElementById('mNom').value.trim();
+  var curs = document.getElementById('mCurs').value;
   var email = document.getElementById('mEmail').value.trim();
-  var tel   = document.getElementById('mTel').value.trim();
-  var obs   = document.getElementById('mObs').value.trim();
+  var tel = document.getElementById('mTel').value.trim();
+  var obs = document.getElementById('mObs').value.trim();
+
   if (!nom || !curs || !email || !tel) {
     alert('Nom, curs, email i telèfon són obligatoris.');
     return;
   }
+
   if (!LLIBRE_SELECCIONAT) return;
+
   var btn = document.getElementById('btnEnviar');
-  btn.disabled = true; btn.textContent = 'Enviant...';
+
+  btn.disabled = true;
+  btn.textContent = 'Enviant...';
+
   fetch(SCRIPT_URL, {
     method: 'POST',
     headers: {'Content-Type': 'text/plain;charset=utf-8'},
     body: JSON.stringify({
-      nom: nom, curs: curs, email: email, tel: tel,
+      nom: nom,
+      curs: curs,
+      email: email,
+      tel: tel,
       codi: LLIBRE_SELECCIONAT.codi,
       titol: LLIBRE_SELECCIONAT.titol,
       obs: obs
     }),
     redirect: 'follow'
   })
-  .then(function(r) { return r.json(); })
+  .then(function(r) {
+    return r.json();
+  })
   .then(function(data) {
-    btn.disabled = false; btn.textContent = 'Enviar sol·licitud';
+    btn.disabled = false;
+    btn.textContent = 'Enviar sol·licitud';
+
     if (data.ok) {
       tancarModal();
       alert('✅ Sol·licitud enviada! La biblioteca es posarà en contacte amb tu.');
@@ -295,7 +796,8 @@ function enviarSollicitud() {
     }
   })
   .catch(function(err) {
-    btn.disabled = false; btn.textContent = 'Enviar sol·licitud';
+    btn.disabled = false;
+    btn.textContent = 'Enviar sol·licitud';
     alert('❌ Error de connexió: ' + err);
   });
 }
@@ -304,5 +806,6 @@ document.getElementById('modalOverlay').addEventListener('click', function(e) {
   if (e.target === this) tancarModal();
 });
 </script>
+
 </body>
 </html>
