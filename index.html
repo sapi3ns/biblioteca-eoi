@@ -2,341 +2,357 @@
 <html lang="ca">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Catàleg Biblioteca EOI Sant Cugat</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  font-family:'Segoe UI',Arial,sans-serif;
-  background:#F0F4F8;
-  color:#1A1A2E
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-header{
-  background:linear-gradient(135deg,#1A3C5E,#243447);
-  color:#fff;
-  padding:20px;
-  text-align:center
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f0f4f8;
+  color: #1a1a2e;
 }
 
-header h1{
-  font-size:1.8em;
-  margin-bottom:4px
+header {
+  background: #1a3c5e;
+  color: white;
+  padding: 20px;
+  text-align: center;
 }
 
-header p{
-  opacity:.8;
-  font-size:.95em
+header h1 {
+  font-size: 28px;
+  margin-bottom: 5px;
 }
 
-.controls{
-  background:#fff;
-  padding:14px 20px;
-  border-bottom:1px solid #E2E8F0;
-  position:sticky;
-  top:0;
-  z-index:100;
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  align-items:center
+header p {
+  font-size: 15px;
+  opacity: 0.85;
 }
 
-.controls input{
-  flex:1;
-  min-width:180px;
-  padding:9px 14px;
-  border:1px solid #CBD5E0;
-  border-radius:8px;
-  font-size:.95em
+.controls {
+  background: white;
+  padding: 14px 20px;
+  border-bottom: 1px solid #dbe3ec;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.controls select{
-  padding:9px 12px;
-  border:1px solid #CBD5E0;
-  border-radius:8px;
-  font-size:.9em;
-  background:#fff;
-  cursor:pointer
+.controls-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.info-bar{
-  padding:10px 20px;
-  background:#EFF6FF;
-  border-bottom:1px solid #BFDBFE;
-  font-size:.9em;
-  color:#1E40AF
+.controls input,
+.controls select {
+  padding: 9px 12px;
+  border: 1px solid #b8c4d2;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:16px;
-  padding:20px
+.controls input {
+  flex: 1 1 190px;
 }
 
-.card{
-  background:#fff;
-  border-radius:12px;
-  padding:16px;
-  box-shadow:0 1px 4px rgba(0,0,0,.08);
-  border:1px solid #E2E8F0;
-  transition:box-shadow .2s
+.controls select {
+  flex: 1 1 150px;
 }
 
-.card:hover{
-  box-shadow:0 4px 16px rgba(0,0,0,.12)
+.info-bar {
+  padding: 10px 20px;
+  background: #eaf3ff;
+  border-bottom: 1px solid #c4daf5;
+  font-size: 14px;
+  color: #1e40af;
 }
 
-.card-ref{
-  font-size:.75em;
-  color:#94A3B8;
-  margin-bottom:6px;
-  font-family:monospace
+#status {
+  padding: 30px;
+  text-align: center;
+  color: #64748b;
+  font-size: 18px;
 }
 
-.card-title{
-  font-weight:700;
-  font-size:1em;
-  margin-bottom:4px;
-  line-height:1.3;
-  color:#1A3C5E
+.catalogo {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 14px;
 }
 
-.card-author{
-  font-size:.85em;
-  color:#64748B;
-  margin-bottom:10px
+.card {
+  background: white;
+  border: 1px solid #dbe3ec;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px;
+  width: calc(25% - 16px);
+  min-width: 260px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
-.badges{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-  margin-bottom:12px
+.card:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.14);
 }
 
-.badge{
-  padding:3px 8px;
-  border-radius:12px;
-  font-size:.75em;
-  font-weight:600
+.card-ref {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  font-family: monospace;
 }
 
-.badge-idioma{
-  background:#DBEAFE;
-  color:#1D4ED8
+.card-title {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1.3;
+  margin-bottom: 5px;
+  color: #1a3c5e;
 }
 
-.badge-nivell{
-  background:#EDE9FE;
-  color:#6D28D9
+.card-author {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 10px;
+  line-height: 1.4;
 }
 
-.badge-genere{
-  background:#FEF3C7;
-  color:#92400E
+.badges {
+  margin-bottom: 12px;
 }
 
-.badge-ok{
-  background:#D1FAE5;
-  color:#065F46
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 2px;
 }
 
-.badge-prestat{
-  background:#FEE2E2;
-  color:#991B1B
+.badge-idioma {
+  background: #dbeafe;
+  color: #1d4ed8;
 }
 
-.badge-audio{
-  background:#E0F2FE;
-  color:#0369A1;
-  cursor:default
+.badge-nivell {
+  background: #ede9fe;
+  color: #6d28d9;
 }
 
-.badge-sub{
-  background:#F0FDF4;
-  color:#166534;
-  cursor:default
+.badge-genere {
+  background: #fef3c7;
+  color: #92400e;
 }
 
-.card-btn{
-  width:100%;
-  padding:8px;
-  background:#2563EB;
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:.9em;
-  font-weight:600;
-  transition:background .2s
+.badge-ok {
+  background: #d1fae5;
+  color: #065f46;
 }
 
-.card-btn:hover:not(:disabled){
-  background:#1D4ED8
+.badge-prestat {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
-.card-btn:disabled{
-  background:#CBD5E0;
-  cursor:not-allowed
+.badge-audio {
+  background: #e0f2fe;
+  color: #0369a1;
 }
 
-.pagination{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:12px;
-  padding:20px;
-  flex-wrap:wrap
+.card-btn {
+  width: 100%;
+  padding: 9px;
+  background: #2563eb;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-.pagination button{
-  padding:8px 18px;
-  border:1px solid #CBD5E0;
-  border-radius:8px;
-  background:#fff;
-  cursor:pointer;
-  font-size:.9em
+.card-btn:hover {
+  background: #1d4ed8;
 }
 
-.pagination button:hover:not(:disabled){
-  background:#EFF6FF
+.card-btn:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
 }
 
-.pagination button:disabled{
-  opacity:.4;
-  cursor:not-allowed
+.pagination {
+  text-align: center;
+  padding: 20px;
 }
 
-.pagination span{
-  font-size:.9em;
-  color:#64748B
+.pagination button {
+  padding: 8px 18px;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 4px;
 }
 
-#status{
-  padding:30px;
-  text-align:center;
-  color:#64748B;
-  font-size:1.1em
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
-.modal-overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  z-index:1000;
-  justify-content:center;
-  align-items:center
+.pagination span {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 8px;
 }
 
-.modal-overlay.open{
-  display:flex
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
 }
 
-.modal{
-  background:#fff;
-  border-radius:16px;
-  padding:28px;
-  width:90%;
-  max-width:460px;
-  max-height:90vh;
-  overflow-y:auto
+.modal {
+  background: white;
+  border-radius: 16px;
+  padding: 26px;
+  width: 90%;
+  max-width: 460px;
+  max-height: 90%;
+  overflow-y: auto;
+  margin: 40px auto;
 }
 
-.modal h2{
-  margin-bottom:6px;
-  color:#1A3C5E;
-  font-size:1.2em
+.modal h2 {
+  color: #1a3c5e;
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 
-.modal .book-info{
-  background:#F8FAFC;
-  border-radius:8px;
-  padding:10px 14px;
-  margin-bottom:18px;
-  font-size:.9em;
-  color:#475569
+.book-info {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  color: #475569;
 }
 
-.modal label{
-  display:block;
-  margin-bottom:4px;
-  font-size:.85em;
-  font-weight:600;
-  color:#374151
+.modal label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #374151;
 }
 
 .modal input,
 .modal select,
-.modal textarea{
-  width:100%;
-  padding:9px 12px;
-  border:1px solid #CBD5E0;
-  border-radius:8px;
-  margin-bottom:12px;
-  font-size:.9em;
-  font-family:inherit;
-  background:#fff
+.modal textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: white;
 }
 
-.modal textarea{
-  height:70px;
-  resize:vertical
+.modal textarea {
+  height: 70px;
+  resize: vertical;
 }
 
-.modal-btns{
-  display:flex;
-  gap:10px;
-  margin-top:6px
+.modal-btns {
+  display: flex;
+  gap: 10px;
 }
 
-.modal-btns button{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:.95em;
-  font-weight:600
+.modal-btns button {
+  flex: 1;
+  padding: 10px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
 }
 
-.btn-cancel{
-  background:#F1F5F9;
-  color:#374151
+.btn-cancel {
+  background: #f1f5f9;
+  color: #374151;
 }
 
-.btn-send{
-  background:#2563EB;
-  color:#fff
+.btn-send {
+  background: #2563eb;
+  color: white;
 }
 
-.btn-send:hover{
-  background:#1D4ED8
+.btn-send:hover {
+  background: #1d4ed8;
 }
 
-.btn-cancel:hover{
-  background:#E2E8F0
+#ttip {
+  position: fixed;
+  background: #1a3c5e;
+  color: white;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  max-width: 260px;
+  text-align: center;
+  pointer-events: none;
+  display: none;
+  z-index: 9999;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
 }
 
-#ttip{
-  position:fixed;
-  background:#1A3C5E;
-  color:#fff;
-  padding:7px 12px;
-  border-radius:8px;
-  font-size:.82em;
-  line-height:1.4;
-  max-width:260px;
-  text-align:center;
-  pointer-events:none;
-  display:none;
-  z-index:9999;
-  box-shadow:0 3px 10px rgba(0,0,0,.3)
+@media screen and (max-width: 1200px) {
+  .card {
+    width: calc(33.333% - 16px);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .card {
+    width: calc(50% - 16px);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  header h1 {
+    font-size: 22px;
+  }
+
+  .card {
+    width: calc(100% - 16px);
+  }
+
+  .controls {
+    position: static;
+  }
+
+  .modal {
+    margin: 20px auto;
+  }
 }
 </style>
 </head>
@@ -349,33 +365,35 @@ header p{
 </header>
 
 <div class="controls">
-  <input type="text" id="cercaTitol" placeholder="Cerca per títol..." oninput="filtrarAmbRetard()">
-  <input type="text" id="cercaAutor" placeholder="Cerca per autor..." oninput="filtrarAmbRetard()">
+  <div class="controls-inner">
+    <input type="text" id="cercaTitol" placeholder="Cerca per títol..." onkeyup="filtrar()">
+    <input type="text" id="cercaAutor" placeholder="Cerca per autor..." onkeyup="filtrar()">
 
-  <select id="filtreIdioma" onchange="filtrar()">
-    <option value="">Tots els idiomes</option>
-  </select>
+    <select id="filtreIdioma" onchange="filtrar()">
+      <option value="">Tots els idiomes</option>
+    </select>
 
-  <select id="filtreNivell" onchange="filtrar()">
-    <option value="">Tots els nivells</option>
-  </select>
+    <select id="filtreNivell" onchange="filtrar()">
+      <option value="">Tots els nivells</option>
+    </select>
 
-  <select id="filtreGenere" onchange="filtrar()">
-    <option value="">Tots els gèneres</option>
-  </select>
+    <select id="filtreGenere" onchange="filtrar()">
+      <option value="">Tots els gèneres</option>
+    </select>
 
-  <select id="filtreDisp" onchange="filtrar()">
-    <option value="">Tots</option>
-    <option value="1">Disponibles</option>
-    <option value="0">En préstec</option>
-  </select>
+    <select id="filtreDisp" onchange="filtrar()">
+      <option value="">Tots</option>
+      <option value="1">Disponibles</option>
+      <option value="0">En préstec</option>
+    </select>
+  </div>
 </div>
 
-<div class="info-bar" id="infoBar">Carregant dades...</div>
+<div class="info-bar" id="infoBar">Carregant...</div>
 
-<div id="status">⏳ Carregant el catàleg. Pot trigar uns segons...</div>
+<div id="status">Carregant el catàleg...</div>
 
-<div class="grid" id="grid"></div>
+<div class="catalogo" id="catalogo"></div>
 
 <div class="pagination" id="pagination"></div>
 
@@ -397,6 +415,9 @@ header p{
       <option value="A2">A2</option>
       <option value="B1">B1</option>
       <option value="B2.1">B2.1</option>
+      <option value="B2.2">B2.2</option>
+      <option value="C1">C1</option>
+      <option value="C2">C2</option>
     </select>
 
     <label>Email de contacte *</label>
@@ -424,297 +445,7 @@ var PAGINA = 1;
 var PER_PAGINA = 50;
 var LLIBRE_SELECCIONAT = null;
 
-var CACHE_KEY = 'biblioteca_eoi_cataleg_v1';
-var CACHE_DATE_KEY = 'biblioteca_eoi_cataleg_data_v1';
-var TEMPS_MAXIM_CARREGA = 20000;
-var timerFiltre = null;
-
-// ── Utilitats visuals ───────────────────────────────────────
-
-function mostrarStatus(text) {
-  var status = document.getElementById('status');
-  status.style.display = 'block';
-  status.textContent = text;
-}
-
-function amagarStatus() {
-  document.getElementById('status').style.display = 'none';
-}
-
-function posarInfo(text) {
-  document.getElementById('infoBar').textContent = text;
-}
-
-// ── Tooltip ─────────────────────────────────────────────────
-
 var ttip = document.getElementById('ttip');
-
-document.addEventListener('mouseover', function(e) {
-  var txt = e.target.getAttribute && e.target.getAttribute('data-tooltip');
-  if (txt) {
-    ttip.textContent = txt;
-    ttip.style.display = 'block';
-  }
-});
-
-document.addEventListener('mousemove', function(e) {
-  if (ttip.style.display === 'block') {
-    var x = e.clientX;
-    var vw = window.innerWidth;
-    var tw = ttip.offsetWidth;
-
-    x = x - tw / 2;
-
-    if (x + tw + 8 > vw) x = vw - tw - 8;
-    if (x < 8) x = 8;
-
-    ttip.style.left = x + 'px';
-    ttip.style.top = (e.clientY - ttip.offsetHeight - 14) + 'px';
-  }
-});
-
-document.addEventListener('mouseout', function(e) {
-  if (e.target.getAttribute && e.target.getAttribute('data-tooltip')) {
-    ttip.style.display = 'none';
-  }
-});
-
-// ── Càrrega del catàleg ──────────────────────────────────────
-// Millora: missatges clars, timeout i memòria local.
-// Si el navegador ja té una còpia guardada, es mostra ràpid i després intenta actualitzar.
-
-function fetchAmbTimeout(url, ms) {
-  return new Promise(function(resolve, reject) {
-    var timer = setTimeout(function() {
-      reject(new Error('Temps d’espera superat carregant el catàleg.'));
-    }, ms);
-
-    fetch(url)
-      .then(function(response) {
-        clearTimeout(timer);
-        resolve(response);
-      })
-      .catch(function(error) {
-        clearTimeout(timer);
-        reject(error);
-      });
-  });
-}
-
-function guardarCatalegEnCache(data) {
-  try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-    localStorage.setItem(CACHE_DATE_KEY, new Date().toISOString());
-  } catch (e) {
-    console.warn('No s’ha pogut guardar el catàleg en memòria local:', e);
-  }
-}
-
-function carregarCatalegDeCache() {
-  try {
-    var raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return false;
-
-    var data = JSON.parse(raw);
-    if (!data || !data.length) return false;
-
-    aplicarCataleg(data, 'cache');
-    return true;
-  } catch (e) {
-    console.warn('No s’ha pogut llegir el catàleg guardat:', e);
-    return false;
-  }
-}
-
-function aplicarCataleg(data, origen) {
-  if (!data || !data.length) {
-    mostrarStatus('No s’han trobat llibres.');
-    posarInfo('No hi ha dades disponibles.');
-    return;
-  }
-
-  TOTS = data;
-  amagarStatus();
-  omplirFiltres();
-  filtrar();
-
-  if (origen === 'cache') {
-    posarInfo('Mostrant el catàleg guardat. Actualitzant dades...');
-  }
-}
-
-function carregarCatalegDesDelServidor(teniaCache) {
-  if (!teniaCache) {
-    mostrarStatus('⏳ Carregant el catàleg. Pot trigar uns segons...');
-    posarInfo('Carregant dades...');
-  }
-
-  fetchAmbTimeout(SCRIPT_URL + '?action=cataleg', TEMPS_MAXIM_CARREGA)
-    .then(function(r) {
-      if (!r.ok) {
-        throw new Error('Resposta del servidor no vàlida: ' + r.status);
-      }
-      return r.json();
-    })
-    .then(function(data) {
-      guardarCatalegEnCache(data);
-      aplicarCataleg(data, 'servidor');
-    })
-    .catch(function(err) {
-      if (teniaCache) {
-        amagarStatus();
-        posarInfo('Mostrant el catàleg guardat. No s’ha pogut actualitzar ara mateix.');
-      } else {
-        mostrarStatus('❌ El catàleg està trigant massa a carregar. Actualitza la pàgina o torna-ho a provar en uns segons.');
-        posarInfo('No s’ha pogut carregar el catàleg.');
-        console.error('Error carregant el catàleg:', err);
-      }
-    });
-}
-
-var teniaCache = carregarCatalegDeCache();
-carregarCatalegDesDelServidor(teniaCache);
-
-function omplirFiltres() {
-  var idiomes = [];
-  var nivells = [];
-  var generes = [];
-
-  TOTS.forEach(function(b) {
-    if (b.idioma && b.idioma.indexOf('@') < 0 && idiomes.indexOf(b.idioma) < 0) idiomes.push(b.idioma);
-    if (b.nivell && b.nivell.indexOf('@') < 0 && nivells.indexOf(b.nivell) < 0) nivells.push(b.nivell);
-    if (b.genere && b.genere.indexOf('@') < 0 && generes.indexOf(b.genere) < 0) generes.push(b.genere);
-  });
-
-  idiomes.sort();
-  nivells.sort();
-  generes.sort();
-
-  var fI = document.getElementById('filtreIdioma');
-  var fN = document.getElementById('filtreNivell');
-  var fG = document.getElementById('filtreGenere');
-
-  var valorIdioma = fI.value;
-  var valorNivell = fN.value;
-  var valorGenere = fG.value;
-
-  fI.innerHTML = '<option value="">Tots els idiomes</option>';
-  fN.innerHTML = '<option value="">Tots els nivells</option>';
-  fG.innerHTML = '<option value="">Tots els gèneres</option>';
-
-  idiomes.forEach(function(v) {
-    fI.innerHTML += '<option value="' + esc(v) + '">' + esc(v) + '</option>';
-  });
-
-  nivells.forEach(function(v) {
-    fN.innerHTML += '<option value="' + esc(v) + '">' + esc(v) + '</option>';
-  });
-
-  generes.forEach(function(v) {
-    fG.innerHTML += '<option value="' + esc(v) + '">' + esc(v) + '</option>';
-  });
-
-  if (valorIdioma) fI.value = valorIdioma;
-  if (valorNivell) fN.value = valorNivell;
-  if (valorGenere) fG.value = valorGenere;
-}
-
-// ── Filtres i renderitzat ────────────────────────────────────
-
-function filtrarAmbRetard() {
-  clearTimeout(timerFiltre);
-  timerFiltre = setTimeout(function() {
-    filtrar();
-  }, 250);
-}
-
-function filtrar() {
-  if (!TOTS.length) return;
-
-  var qT = document.getElementById('cercaTitol').value.toLowerCase().trim();
-  var qA = document.getElementById('cercaAutor').value.toLowerCase().trim();
-  var iI = document.getElementById('filtreIdioma').value;
-  var iN = document.getElementById('filtreNivell').value;
-  var iG = document.getElementById('filtreGenere').value;
-  var iD = document.getElementById('filtreDisp').value;
-
-  FILTRATS = TOTS.filter(function(b) {
-    var titol = String(b.titol || '').toLowerCase();
-    var autor = String(b.autor || '').toLowerCase();
-
-    if (qT && titol.indexOf(qT) < 0) return false;
-    if (qA && autor.indexOf(qA) < 0) return false;
-    if (iI && b.idioma !== iI) return false;
-    if (iN && b.nivell !== iN) return false;
-    if (iG && b.genere !== iG) return false;
-    if (iD !== '' && String(b.disponible) !== iD) return false;
-
-    return true;
-  });
-
-  PAGINA = 1;
-  renderPagina();
-}
-
-function renderPagina() {
-  var totalPag = Math.ceil(FILTRATS.length / PER_PAGINA) || 1;
-  var inici = (PAGINA - 1) * PER_PAGINA;
-  var fi = Math.min(inici + PER_PAGINA, FILTRATS.length);
-  var pag = FILTRATS.slice(inici, fi);
-
-  posarInfo(
-    'Mostrant ' +
-    (FILTRATS.length ? (inici + 1) + '–' + fi : 0) +
-    ' de ' + FILTRATS.length +
-    ' resultats (total: ' + TOTS.length + ' llibres)'
-  );
-
-  var grid = document.getElementById('grid');
-  grid.innerHTML = '';
-
-  if (!pag.length) {
-    grid.innerHTML = '<p style="padding:30px;color:#94A3B8;grid-column:1/-1">No s’han trobat llibres amb aquests filtres.</p>';
-  } else {
-    pag.forEach(function(b) {
-      var disp = b.disponible === 1;
-      var card = document.createElement('div');
-
-      card.className = 'card';
-
-      card.innerHTML =
-        '<div class="card-ref">Ref: ' + esc(b.codi) + (b.copia ? ' · CD àudio: ' + esc(b.copia) : '') + '</div>' +
-        '<div class="card-title">' + esc(b.titol) + '</div>' +
-        '<div class="card-author">' + esc(b.autor) + (b.editorial ? ' · ' + esc(b.editorial) : '') + '</div>' +
-        '<div class="badges">' +
-          (b.idioma ? '<span class="badge badge-idioma">' + esc(b.idioma) + '</span>' : '') +
-          (b.nivell ? '<span class="badge badge-nivell">' + esc(b.nivell) + '</span>' : '') +
-          (b.genere ? '<span class="badge badge-genere">' + esc(b.genere) + '</span>' : '') +
-          '<span class="badge ' + (disp ? 'badge-ok' : 'badge-prestat') + '">' + (disp ? '✓ Disponible' : '✗ En préstec') + '</span>' +
-          (b.audio ? '<span class="badge badge-audio" data-tooltip="' + esc(b.audio) + '">Àudio</span>' : '') +
-          (b.subtitols ? '<span class="badge badge-sub" data-tooltip="' + esc(b.subtitols) + '">Subtítols</span>' : '') +
-        '</div>' +
-        '<button class="card-btn"' + (disp ? '' : ' disabled') + ' onclick=\'obrirModal(' + JSON.stringify(b).replace(/'/g, '&#39;') + ')\'' + '>' +
-          (disp ? 'Sol·licitar préstec' : 'No disponible') +
-        '</button>';
-
-      grid.appendChild(card);
-    });
-  }
-
-  var pDiv = document.getElementById('pagination');
-
-  pDiv.innerHTML = totalPag <= 1 ? '' :
-    '<button onclick="canviaPagina(-1)"' + (PAGINA === 1 ? ' disabled' : '') + '>← Anterior</button>' +
-    '<span>Pàgina ' + PAGINA + ' de ' + totalPag + '</span>' +
-    '<button onclick="canviaPagina(1)"' + (PAGINA === totalPag ? ' disabled' : '') + '>Següent →</button>';
-}
-
-function canviaPagina(dir) {
-  var totalPag = Math.ceil(FILTRATS.length / PER_PAGINA) || 1;
-  PAGINA = Math.max(1, Math.min(totalPag, PAGINA + dir));
-  renderPagina();
-  window.scrollTo(0, 0);
-}
 
 function esc(s) {
   return String(s || '')
@@ -724,7 +455,305 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
-// ── Modal de sol·licitud ─────────────────────────────────────
+function trimText(s) {
+  return String(s || '').replace(/^\s+|\s+$/g, '');
+}
+
+function lowerText(s) {
+  return String(s || '').toLowerCase();
+}
+
+function carregarCataleg() {
+  var xhr = new XMLHttpRequest();
+
+  xhr.open('GET', 'catalogo.json?v=' + new Date().getTime(), true);
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          var data = JSON.parse(xhr.responseText);
+
+          if (!data || !data.length) {
+            document.getElementById('status').innerHTML = 'No s’han trobat llibres.';
+            return;
+          }
+
+          TOTS = [];
+
+          for (var i = 0; i < data.length; i++) {
+            TOTS.push(normalitzarLlibre(data[i]));
+          }
+
+          document.getElementById('status').style.display = 'none';
+
+          omplirFiltres();
+          filtrar();
+
+        } catch (e) {
+          document.getElementById('status').innerHTML = 'Error llegint catalogo.json.';
+        }
+      } else {
+        document.getElementById('status').innerHTML = 'No s’ha pogut carregar catalogo.json.';
+      }
+    }
+  };
+
+  xhr.send(null);
+}
+
+function normalitzarLlibre(b) {
+  var disponible = false;
+
+  if (b.disponible === true) disponible = true;
+  if (b.disponible === 1) disponible = true;
+  if (b.disponible === '1') disponible = true;
+  if (b.disponible === 'true') disponible = true;
+  if (b.disponible === 'TRUE') disponible = true;
+  if (b.disponible === 'Sí') disponible = true;
+  if (b.disponible === 'SI') disponible = true;
+  if (b.disponible === 'Disponible') disponible = true;
+
+  return {
+    codi: b.codi || b.referencia || b.referencia || '',
+    titol: b.titol || b.titulo || '',
+    autor: b.autor || '',
+    editorial: b.editorial || '',
+    idioma: b.idioma || '',
+    nivell: b.nivell || b.nivel || '',
+    genere: b.genere || b.genero || '',
+    audio: b.audio || '',
+    disponible: disponible
+  };
+}
+
+function afegirOpcio(selectId, valor) {
+  var select = document.getElementById(selectId);
+  var opt = document.createElement('option');
+  opt.value = valor;
+  opt.innerHTML = esc(valor);
+  select.appendChild(opt);
+}
+
+function omplirFiltres() {
+  var idiomes = [];
+  var nivells = [];
+  var generes = [];
+
+  for (var i = 0; i < TOTS.length; i++) {
+    var b = TOTS[i];
+
+    if (b.idioma && b.idioma.indexOf('@') < 0 && idiomes.indexOf(b.idioma) < 0) {
+      idiomes.push(b.idioma);
+    }
+
+    if (b.nivell && b.nivell.indexOf('@') < 0 && nivells.indexOf(b.nivell) < 0) {
+      nivells.push(b.nivell);
+    }
+
+    if (b.genere && b.genere.indexOf('@') < 0 && generes.indexOf(b.genere) < 0) {
+      generes.push(b.genere);
+    }
+  }
+
+  idiomes.sort();
+  nivells.sort();
+  generes.sort();
+
+  for (var a = 0; a < idiomes.length; a++) afegirOpcio('filtreIdioma', idiomes[a]);
+  for (var n = 0; n < nivells.length; n++) afegirOpcio('filtreNivell', nivells[n]);
+  for (var g = 0; g < generes.length; g++) afegirOpcio('filtreGenere', generes[g]);
+}
+
+function filtrar() {
+  if (!TOTS.length) return;
+
+  var qT = lowerText(trimText(document.getElementById('cercaTitol').value));
+  var qA = lowerText(trimText(document.getElementById('cercaAutor').value));
+  var iI = document.getElementById('filtreIdioma').value;
+  var iN = document.getElementById('filtreNivell').value;
+  var iG = document.getElementById('filtreGenere').value;
+  var iD = document.getElementById('filtreDisp').value;
+
+  FILTRATS = [];
+
+  for (var i = 0; i < TOTS.length; i++) {
+    var b = TOTS[i];
+
+    if (qT && lowerText(b.titol).indexOf(qT) < 0) continue;
+    if (qA && lowerText(b.autor).indexOf(qA) < 0) continue;
+    if (iI && b.idioma !== iI) continue;
+    if (iN && b.nivell !== iN) continue;
+    if (iG && b.genere !== iG) continue;
+    if (iD === '1' && !b.disponible) continue;
+    if (iD === '0' && b.disponible) continue;
+
+    FILTRATS.push(b);
+  }
+
+  PAGINA = 1;
+  renderPagina();
+}
+
+function renderPagina() {
+  var totalPag = Math.ceil(FILTRATS.length / PER_PAGINA);
+  if (totalPag < 1) totalPag = 1;
+
+  var inici = (PAGINA - 1) * PER_PAGINA;
+  var fi = inici + PER_PAGINA;
+  if (fi > FILTRATS.length) fi = FILTRATS.length;
+
+  var catalogo = document.getElementById('catalogo');
+  catalogo.innerHTML = '';
+
+  document.getElementById('infoBar').innerHTML =
+    'Mostrant ' +
+    (FILTRATS.length ? (inici + 1) + '–' + fi : 0) +
+    ' de ' + FILTRATS.length +
+    ' resultats (total: ' + TOTS.length + ' llibres)';
+
+  if (!FILTRATS.length) {
+    catalogo.innerHTML = '<p style="padding:30px;color:#94a3b8;">No s’han trobat llibres amb aquests filtres.</p>';
+  } else {
+    for (var i = inici; i < fi; i++) {
+      catalogo.appendChild(crearCard(FILTRATS[i]));
+    }
+  }
+
+  renderPaginacio(totalPag);
+}
+
+function crearCard(b) {
+  var card = document.createElement('div');
+  card.className = 'card';
+
+  var html = '';
+
+  html += '<div class="card-ref">Ref: ' + esc(b.codi) + '</div>';
+  html += '<div class="card-title">' + esc(b.titol) + '</div>';
+  html += '<div class="card-author">' + esc(b.autor);
+
+  if (b.editorial) {
+    html += ' · ' + esc(b.editorial);
+  }
+
+  html += '</div>';
+
+  html += '<div class="badges">';
+
+  if (b.idioma) {
+    html += '<span class="badge badge-idioma">' + esc(b.idioma) + '</span>';
+  }
+
+  if (b.nivell) {
+    html += '<span class="badge badge-nivell">' + esc(b.nivell) + '</span>';
+  }
+
+  if (b.genere) {
+    html += '<span class="badge badge-genere">' + esc(b.genere) + '</span>';
+  }
+
+  if (b.disponible) {
+    html += '<span class="badge badge-ok">Disponible</span>';
+  } else {
+    html += '<span class="badge badge-prestat">En préstec</span>';
+  }
+
+  if (b.audio) {
+    html += '<span class="badge badge-audio" onmouseover="mostrarTooltip(event,\'' + escJS(b.audio) + '\')" onmousemove="moureTooltip(event)" onmouseout="amagarTooltip()">Àudio</span>';
+  }
+
+  html += '</div>';
+
+  if (b.disponible) {
+    html += '<button class="card-btn">Sol·licitar préstec</button>';
+  } else {
+    html += '<button class="card-btn" disabled>No disponible</button>';
+  }
+
+  card.innerHTML = html;
+
+  var btn = card.getElementsByTagName('button')[0];
+
+  if (b.disponible) {
+    btn.onclick = function() {
+      obrirModal(b);
+    };
+  }
+
+  return card;
+}
+
+function renderPaginacio(totalPag) {
+  var p = document.getElementById('pagination');
+  var html = '';
+
+  if (totalPag <= 1) {
+    p.innerHTML = '';
+    return;
+  }
+
+  html += '<button onclick="canviaPagina(-1)"';
+  if (PAGINA === 1) html += ' disabled';
+  html += '>Anterior</button>';
+
+  html += '<span>Pàgina ' + PAGINA + ' de ' + totalPag + '</span>';
+
+  html += '<button onclick="canviaPagina(1)"';
+  if (PAGINA === totalPag) html += ' disabled';
+  html += '>Següent</button>';
+
+  p.innerHTML = html;
+}
+
+function canviaPagina(dir) {
+  var totalPag = Math.ceil(FILTRATS.length / PER_PAGINA);
+  if (totalPag < 1) totalPag = 1;
+
+  PAGINA = PAGINA + dir;
+
+  if (PAGINA < 1) PAGINA = 1;
+  if (PAGINA > totalPag) PAGINA = totalPag;
+
+  renderPagina();
+
+  if (window.scrollTo) {
+    window.scrollTo(0, 0);
+  }
+}
+
+function escJS(s) {
+  return String(s || '')
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, ' ');
+}
+
+function mostrarTooltip(e, txt) {
+  ttip.innerHTML = esc(txt);
+  ttip.style.display = 'block';
+  moureTooltip(e);
+}
+
+function moureTooltip(e) {
+  if (ttip.style.display !== 'block') return;
+
+  var x = e.clientX - (ttip.offsetWidth / 2);
+  var y = e.clientY - ttip.offsetHeight - 14;
+  var vw = window.innerWidth || document.documentElement.clientWidth;
+
+  if (x < 8) x = 8;
+  if (x + ttip.offsetWidth + 8 > vw) x = vw - ttip.offsetWidth - 8;
+  if (y < 8) y = e.clientY + 18;
+
+  ttip.style.left = x + 'px';
+  ttip.style.top = y + 'px';
+}
+
+function amagarTooltip() {
+  ttip.style.display = 'none';
+}
 
 function obrirModal(b) {
   LLIBRE_SELECCIONAT = b;
@@ -740,71 +769,87 @@ function obrirModal(b) {
   document.getElementById('mTel').value = '';
   document.getElementById('mObs').value = '';
 
-  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('modalOverlay').style.display = 'block';
 }
 
 function tancarModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
+  document.getElementById('modalOverlay').style.display = 'none';
   LLIBRE_SELECCIONAT = null;
 }
 
 function enviarSollicitud() {
-  var nom = document.getElementById('mNom').value.trim();
+  var nom = trimText(document.getElementById('mNom').value);
   var curs = document.getElementById('mCurs').value;
-  var email = document.getElementById('mEmail').value.trim();
-  var tel = document.getElementById('mTel').value.trim();
-  var obs = document.getElementById('mObs').value.trim();
+  var email = trimText(document.getElementById('mEmail').value);
+  var tel = trimText(document.getElementById('mTel').value);
+  var obs = trimText(document.getElementById('mObs').value);
 
   if (!nom || !curs || !email || !tel) {
     alert('Nom, curs, email i telèfon són obligatoris.');
     return;
   }
 
-  if (!LLIBRE_SELECCIONAT) return;
+  if (!LLIBRE_SELECCIONAT) {
+    alert('No hi ha cap llibre seleccionat.');
+    return;
+  }
 
   var btn = document.getElementById('btnEnviar');
-
   btn.disabled = true;
-  btn.textContent = 'Enviant...';
+  btn.innerHTML = 'Enviant...';
 
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    headers: {'Content-Type': 'text/plain;charset=utf-8'},
-    body: JSON.stringify({
-      nom: nom,
-      curs: curs,
-      email: email,
-      tel: tel,
-      codi: LLIBRE_SELECCIONAT.codi,
-      titol: LLIBRE_SELECCIONAT.titol,
-      obs: obs
-    }),
-    redirect: 'follow'
-  })
-  .then(function(r) {
-    return r.json();
-  })
-  .then(function(data) {
-    btn.disabled = false;
-    btn.textContent = 'Enviar sol·licitud';
+  var payload = {
+    nom: nom,
+    curs: curs,
+    email: email,
+    tel: tel,
+    codi: LLIBRE_SELECCIONAT.codi,
+    titol: LLIBRE_SELECCIONAT.titol,
+    obs: obs
+  };
 
-    if (data.ok) {
-      tancarModal();
-      alert('✅ Sol·licitud enviada! La biblioteca es posarà en contacte amb tu.');
-    } else {
-      alert('❌ Error: ' + (data.error || 'Desconegut'));
+  var xhr = new XMLHttpRequest();
+
+  xhr.open('POST', SCRIPT_URL, true);
+  xhr.setRequestHeader('Content-Type', 'text/plain;charset=utf-8');
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      btn.disabled = false;
+      btn.innerHTML = 'Enviar sol·licitud';
+
+      try {
+        var data = JSON.parse(xhr.responseText);
+
+        if (data.ok) {
+          tancarModal();
+          alert('Sol·licitud enviada. La biblioteca es posarà en contacte amb tu.');
+        } else {
+          alert('Error: ' + (data.error || 'Desconegut'));
+        }
+      } catch (e) {
+        alert('La sol·licitud s’ha enviat, però no s’ha pogut llegir la resposta del servidor.');
+        tancarModal();
+      }
     }
-  })
-  .catch(function(err) {
+  };
+
+  xhr.onerror = function() {
     btn.disabled = false;
-    btn.textContent = 'Enviar sol·licitud';
-    alert('❌ Error de connexió: ' + err);
-  });
+    btn.innerHTML = 'Enviar sol·licitud';
+    alert('Error de connexió.');
+  };
+
+  xhr.send(JSON.stringify(payload));
 }
 
-document.getElementById('modalOverlay').addEventListener('click', function(e) {
-  if (e.target === this) tancarModal();
-});
+document.getElementById('modalOverlay').onclick = function(e) {
+  if (e.target === document.getElementById('modalOverlay')) {
+    tancarModal();
+  }
+};
+
+carregarCataleg();
 </script>
 
 </body>
