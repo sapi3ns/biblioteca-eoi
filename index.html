@@ -3574,11 +3574,12 @@ body {
 
 .field-error {
   display: none;
-  margin-top: -7px;
-  margin-bottom: 9px;
+  margin-top: 7px;
+  margin-bottom: 14px;
   color: #b91c1c;
   font-size: 12px;
   font-weight: 800;
+  line-height: 1.35;
 }
 
 .field-error.show {
@@ -3829,7 +3830,10 @@ body {
 
 <script>
 var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json';
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVbR-7FGuqdNFSG20lRq2ZAMuwjbsDCIO4A97w_SMur_kwYiCFMn8Wtl7fL0PlI-5b/exec';
+/* URL ANTERIOR ERRÓNEA conservada para rastreo:
+   https://script.google.com/macros/s/AKfycbwVbR-7FGuqdNFSG20lRq2ZAMuwjbsDCIO4A97w_SMur_kwYiCFMn8Wtl7fL0PlI-5b/exec
+*/
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxLYSnKDh1JP2AZhYLWSXy6dSr4dKFjiL23nvJ6yqD5T7i7lXmiPu0Z7PJkHHxNjqtXjQ/exec';
 
 var TOTS = [];
 var FILTRATS = [];
@@ -4640,10 +4644,7 @@ function enviarSollicitud() {
           alert('Error: ' + (data.error || 'Desconegut'));
         }
       } catch (e) {
-        var llibreConfirmat = LLIBRE_SELECCIONAT;
-        tancarModal();
-        mostrarConfirmacio(llibreConfirmat);
-        mostrarBotonNoMasLibros();
+        alert('La sol·licitud no s’ha pogut confirmar. Torna-ho a provar o avisa la biblioteca.');
       }
     }
   };
