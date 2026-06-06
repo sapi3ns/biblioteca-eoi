@@ -63105,5 +63105,16 @@
     "nivell": "",
     "genere": "Literatura i lectures no graduades anglès",
     "disponible": true
+  },
+  {
+    "codi": "TEST-EOI-001",
+    "titol": "Llibre de prova actualització catàleg",
+    "autor": "EOI Sant Cugat",
+    "audio": "",
+    "editorial": "Prova interna",
+    "idioma": "Anglès",
+    "nivell": "B1",
+    "genere": "Altres",
+    "disponible": true
   }
 ]
