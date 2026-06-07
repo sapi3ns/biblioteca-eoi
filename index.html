@@ -3724,80 +3724,6 @@ body {
   }
 }
 
-
-
-/* ==========================================================
-   V19 — Blindaje definitivo de los mensajes de validación
-   - cada mensaje ocupa espacio real debajo de su campo
-   - evita que se monte sobre bordes o campos siguientes
-   - permite crecer al formulario cuando aparecen varios avisos
-   ========================================================== */
-
-.modal-form-grid {
-  align-items: start;
-}
-
-.modal-field {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.modal-field label {
-  flex: 0 0 auto;
-}
-
-.modal-field input,
-.modal-field select,
-.modal-field textarea {
-  flex: 0 0 auto;
-}
-
-.field-error {
-  display: none;
-  width: 100%;
-  min-height: 0;
-  margin: 7px 2px 2px !important;
-  padding: 0 2px;
-  position: static !important;
-  transform: none !important;
-  line-height: 1.35 !important;
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-
-.field-error.show {
-  display: block;
-}
-
-/* En escritorio el formulario debe poder crecer al mostrar errores. */
-@media screen and (min-width: 1181px) {
-  .modal-form-section {
-    overflow-y: auto !important;
-    overscroll-behavior: contain;
-  }
-
-  .modal-form-grid {
-    row-gap: 14px !important;
-  }
-
-  .modal-field {
-    align-self: start;
-  }
-}
-
-/* En móvil y tableta se reserva separación suficiente entre filas. */
-@media screen and (max-width: 1180px) {
-  .modal-form-grid {
-    row-gap: 12px !important;
-  }
-
-  .field-error {
-    margin-top: 7px !important;
-    margin-bottom: 1px !important;
-  }
-}
-
 </style>
 </head>
 
@@ -4013,7 +3939,7 @@ body {
 
 <script>
 var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json';
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxLYSnKDh1JP2AZhYLWSXy6dSr4dKFjiL23nvJ6yqD5T7i7lXmiPu0Z7PJkHHxNjqtXjQ/exec';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrQmSmjQrgPlKhTK1pBMJNISdac8t8Drp-Y3Vx1DHa4TpOMBp8Jwzu2Cd7ijCSLPJc/exec';
 var TOTS = [];
 var FILTRATS = [];
 var MOSTRATS = [];
