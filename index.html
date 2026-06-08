@@ -3760,13 +3760,11 @@ body {
 
       <div class="group">
         <span class="group-title">Nivell</span>
-        <button class="pill active" id="nivelTots" onclick="setNivell('')">Tots</button>
         <button class="pill" onclick="setNivell('A1')" data-nivel="A1">A1</button>
         <button class="pill" onclick="setNivell('A2')" data-nivel="A2">A2</button>
         <button class="pill" onclick="setNivell('B1')" data-nivel="B1">B1</button>
         <button class="pill" onclick="setNivell('B2')" data-nivel="B2">B2</button>
-        <button class="pill" onclick="setNivell('C1')" data-nivel="C1">C1</button>
-        <button class="pill" onclick="setNivell('C2')" data-nivel="C2">C2</button>
+        <button class="pill" onclick="setNivell('B2.1')" data-nivel="B2.1">B2.1</button>
       </div>
 
       <div class="group">
@@ -4090,7 +4088,6 @@ function marcarIdioma() {
 
 function marcarNivell() {
   var pills = document.querySelectorAll('[data-nivel]');
-  document.getElementById('nivelTots').className = 'pill' + (FILTRO_NIVEL === '' ? ' active' : '');
 
   for (var i = 0; i < pills.length; i++) {
     var n = pills[i].getAttribute('data-nivel');
@@ -4132,7 +4129,7 @@ function filtrar() {
     }
 
     if (FILTRO_IDIOMA && b.idioma !== FILTRO_IDIOMA) continue;
-    if (FILTRO_NIVEL && b.nivell.indexOf(FILTRO_NIVEL) < 0) continue;
+    if (FILTRO_NIVEL && trim(b.nivell) !== FILTRO_NIVEL) continue;
     if (FILTRO_DISP === '1' && !b.disponible) continue;
     if (genero && b.genere !== genero) continue;
 
