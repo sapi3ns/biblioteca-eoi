@@ -3744,7 +3744,17 @@ body {
   <section class="search-card">
     <div class="search-main">
       <div class="icon">🔎</div>
-      <input type="text" id="q" placeholder="Cerca per títol, autor o referència..." onkeyup="programarFiltro()">
+      <input
+        type="text"
+        id="q"
+        name="eoi-catalog-search"
+        placeholder="Cerca per títol, autor o referència..."
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        onkeyup="programarFiltro()"
+      >
       <button onclick="filtrar()">Buscar</button>
     </div>
 
