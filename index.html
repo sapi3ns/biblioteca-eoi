@@ -335,6 +335,23 @@ body {
     linear-gradient(160deg,#334155 0%,#64748b 55%,#cbd5e1 100%);
 }
 
+.image-zone.cover-real {
+  background: #eef4fb;
+  display: grid;
+  place-items: center;
+}
+
+.image-zone.cover-real img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-zone.cover-real:after {
+  display: none;
+}
+
 .image-zone:after {
   content: "";
   position: absolute;
@@ -626,6 +643,23 @@ body {
   background:
     radial-gradient(circle at 22% 18%, rgba(255,255,255,.30), transparent 18%),
     linear-gradient(160deg,#334155 0%,#64748b 55%,#cbd5e1 100%);
+}
+
+.mb-book-cover.real-cover {
+  padding: 0;
+  background: #eef4fb;
+}
+
+.mb-book-cover.real-cover img {
+  width: 100%;
+  height: 100%;
+  min-height: 390px;
+  object-fit: cover;
+  display: block;
+}
+
+.mb-book-cover.real-cover:after {
+  display: none;
 }
 
 .mb-book-cover:after {
@@ -4354,10 +4388,16 @@ function crearCard(b) {
   var disp = b.disponible;
 
   var html = '';
-  html += '<div class="' + crearImagenClase(b) + '">';
-  html += '<div class="book-illus"><div class="circle"></div><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="mountain"></div></div>';
-  html += '<div class="image-tag">Imatge automàtica</div>';
-  html += '</div>';
+  if (b.portadaUrl) {
+    html += '<div class="image-zone cover-real">';
+    html += '<img src="' + esc(b.portadaUrl) + '" alt="Portada de ' + esc(b.titol || 'llibre') + '" loading="lazy">';
+    html += '</div>';
+  } else {
+    html += '<div class="' + crearImagenClase(b) + '">';
+    html += '<div class="book-illus"><div class="circle"></div><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="mountain"></div></div>';
+    html += '<div class="image-tag">Imatge automàtica</div>';
+    html += '</div>';
+  }
 
   html += '<div class="card-body">';
   html += '<div class="ref">Ref: ' + esc(b.codi) + '</div>';
@@ -4554,11 +4594,29 @@ function obrirModal(b) {
 
   var coverClass = crearImagenClase(b).replace('image-zone', 'mb-book-cover');
   var estado = b.disponible ? 'Disponible' : 'No disponible';
+  var modalCover = document.getElementById('modalBookCover');
 
-  document.getElementById('modalBookCover').className = coverClass;
-  document.getElementById('modalCoverBadge').innerHTML = esc(idiomaModalTexto(b) + ' · ' + estado);
-  document.getElementById('modalCoverRef').innerHTML = 'Ref: ' + esc(b.codi || '—');
-  document.getElementById('modalCoverTitle').innerHTML = esc(b.titol || 'Sense títol');
+  if (b.portadaUrl) {
+    modalCover.className = 'mb-book-cover real-cover';
+    modalCover.innerHTML = '<img src="' + esc(b.portadaUrl) + '" alt="Portada de ' + esc(b.titol || 'llibre') + '">';
+  } else {
+    modalCover.className = coverClass;
+    modalCover.innerHTML = '' +
+      '<span class="mb-cover-badge" id="modalCoverBadge"></span>' +
+      '<div class="mb-cover-circle"></div>' +
+      '<div class="mb-cover-lines">' +
+        '<div class="a"></div>' +
+        '<div class="b"></div>' +
+        '<div class="c"></div>' +
+      '</div>' +
+      '<div class="mb-cover-text">' +
+        '<div class="mb-cover-ref" id="modalCoverRef"></div>' +
+        '<div class="mb-cover-title" id="modalCoverTitle"></div>' +
+      '</div>';
+    document.getElementById('modalCoverBadge').innerHTML = esc(idiomaModalTexto(b) + ' · ' + estado);
+    document.getElementById('modalCoverRef').innerHTML = 'Ref: ' + esc(b.codi || '—');
+    document.getElementById('modalCoverTitle').innerHTML = esc(b.titol || 'Sense títol');
+  }
 
   document.getElementById('modalBookTitle').innerHTML = esc(b.titol || 'Sense títol');
   document.getElementById('modalBookAuthor').innerHTML = esc(b.autor || 'Autor/a no indicat');
@@ -4575,6 +4633,7 @@ function obrirModal(b) {
   if (b.idioma) badges += '<span class="badge ' + idiomaEtiquetaClase(b) + '">' + esc(b.idioma) + '</span>';
   if (b.nivell) badges += '<span class="badge level">' + esc(b.nivell) + '</span>';
   if (b.genere) badges += '<span class="badge genre">' + esc(b.genere) + '</span>';
+  if (b.isbn) badges += '<span class="badge genre">ISBN ' + esc(b.isbn) + '</span>';
   badges += '<span class="badge ' + (b.disponible ? 'ok' : 'no') + '">' + esc(estado) + '</span>';
 
   document.getElementById('modalBookBadges').innerHTML = badges;
