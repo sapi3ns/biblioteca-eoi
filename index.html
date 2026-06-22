@@ -4073,6 +4073,8 @@ function normalizarLibro(b) {
     nivell: b.nivell || b.nivel || b['nivell/curs'] || '',
     genere: b.genere || b.genero || b['gènere'] || '',
     audio: b.audio || '',
+    isbn: b.isbn || b['ISBN / Codi barres'] || b.codigoBarras || '',
+    portadaUrl: b.portadaUrl || b['Portada URL'] || '',
     disponible: disponible
   };
 }
