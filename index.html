@@ -3980,7 +3980,7 @@ body {
 </div>
 
 <script>
-var CATALOGO_VERSION = '20260622-portadas';
+var CATALOGO_VERSION = '20260622-portadas-v2';
 var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json?v=' + CATALOGO_VERSION;
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrQmSmjQrgPlKhTK1pBMJNISdac8t8Drp-Y3Vx1DHa4TpOMBp8Jwzu2Cd7ijCSLPJc/exec';
 var TOTS = [];
@@ -4015,6 +4015,16 @@ function lower(s) {
 
 function trim(s) {
   return String(s || '').replace(/^\s+|\s+$/g,'');
+}
+
+function portadaDesdeLibro(b) {
+  var portada = trim(b.portadaUrl || b['Portada URL'] || '');
+  var isbn = trim(b.isbn || b['ISBN / Codi barres'] || b.codigoBarras || '');
+
+  if (portada) return portada;
+  if (!isbn) return '';
+
+  return 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(isbn) + '-L.jpg?default=false';
 }
 
 function cargarCatalogo() {
@@ -4064,6 +4074,9 @@ function normalizarLibro(b) {
     disponible = true;
   }
 
+  var isbn = trim(b.isbn || b['ISBN / Codi barres'] || b.codigoBarras || '');
+  var portadaUrl = portadaDesdeLibro(b);
+
   return {
     codi: b.codi || b.referencia || b.referència || '',
     titol: b.titol || b.titulo || '',
@@ -4073,8 +4086,8 @@ function normalizarLibro(b) {
     nivell: b.nivell || b.nivel || b['nivell/curs'] || '',
     genere: b.genere || b.genero || b['gènere'] || '',
     audio: b.audio || '',
-    isbn: b.isbn || b['ISBN / Codi barres'] || b.codigoBarras || '',
-    portadaUrl: b.portadaUrl || b['Portada URL'] || '',
+    isbn: isbn,
+    portadaUrl: portadaUrl,
     disponible: disponible
   };
 }
