@@ -3980,7 +3980,7 @@ body {
 </div>
 
 <script>
-var CATALOGO_VERSION = '20260622-portadas-v2';
+var CATALOGO_VERSION = '20260622-portadas-v3';
 var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json?v=' + CATALOGO_VERSION;
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrQmSmjQrgPlKhTK1pBMJNISdac8t8Drp-Y3Vx1DHa4TpOMBp8Jwzu2Cd7ijCSLPJc/exec';
 var TOTS = [];
@@ -4397,6 +4397,15 @@ function crearImagenClase(b) {
   return 'image-zone neutral';
 }
 
+function crearImagenAutomaticaHtml(b) {
+  var html = '';
+  html += '<div class="' + crearImagenClase(b) + '">';
+  html += '<div class="book-illus"><div class="circle"></div><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="mountain"></div></div>';
+  html += '<div class="image-tag">Imatge automàtica</div>';
+  html += '</div>';
+  return html;
+}
+
 function crearCard(b) {
   var card = document.createElement('article');
   card.className = 'card';
@@ -4406,13 +4415,10 @@ function crearCard(b) {
   var html = '';
   if (b.portadaUrl) {
     html += '<div class="image-zone cover-real">';
-    html += '<img src="' + esc(b.portadaUrl) + '" alt="Portada de ' + esc(b.titol || 'llibre') + '" loading="lazy">';
+    html += '<img class="cover-img" src="' + esc(b.portadaUrl) + '" alt="Portada de ' + esc(b.titol || 'llibre') + '">';
     html += '</div>';
   } else {
-    html += '<div class="' + crearImagenClase(b) + '">';
-    html += '<div class="book-illus"><div class="circle"></div><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="mountain"></div></div>';
-    html += '<div class="image-tag">Imatge automàtica</div>';
-    html += '</div>';
+    html += crearImagenAutomaticaHtml(b);
   }
 
   html += '<div class="card-body">';
@@ -4439,6 +4445,14 @@ function crearCard(b) {
   html += '</div>';
 
   card.innerHTML = html;
+
+  var coverImg = card.querySelector('.cover-img');
+  if (coverImg) {
+    coverImg.onerror = function() {
+      var zone = coverImg.parentNode;
+      if (zone) zone.outerHTML = crearImagenAutomaticaHtml(b);
+    };
+  }
 
   var btn = card.getElementsByTagName('button')[0];
 
