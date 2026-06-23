@@ -3762,9 +3762,15 @@ body {
 
 /* Portadas reales: deben verse como portada completa, no como banner. */
 .card.has-real-cover .image-zone.cover-real {
-  height: 330px !important;
-  padding: 12px !important;
+  height: 430px !important;
+  padding: 0 !important;
   background: #f4f8fc !important;
+}
+
+.card.has-real-cover .image-zone.cover-bg {
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
 }
 
 .card.has-real-cover .image-zone.cover-real img,
@@ -3783,7 +3789,7 @@ body {
 
 @media screen and (max-width: 760px) {
   .card.has-real-cover .image-zone.cover-real {
-    height: 300px !important;
+    height: 390px !important;
   }
 
   .mb-book-cover.real-cover {
@@ -3792,8 +3798,12 @@ body {
 }
 
 @media screen and (min-width: 1181px) {
+  .card.has-real-cover {
+    flex-basis: 310px !important;
+  }
+
   .card.has-real-cover .image-zone.cover-real {
-    height: 340px !important;
+    height: 430px !important;
   }
 }
 
@@ -4019,7 +4029,7 @@ body {
 </div>
 
 <script>
-var CATALOGO_VERSION = '20260623-portadas-v6';
+var CATALOGO_VERSION = '20260623-portadas-v7';
 var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json?v=' + CATALOGO_VERSION;
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrQmSmjQrgPlKhTK1pBMJNISdac8t8Drp-Y3Vx1DHa4TpOMBp8Jwzu2Cd7ijCSLPJc/exec';
 var TOTS = [];
@@ -4451,10 +4461,13 @@ function activarPortadaQuanCarregui(contenidor, b) {
   var portada = new Image();
 
   portada.onload = function() {
-    contenidor.innerHTML =
-      '<div class="image-zone cover-real">' +
-        '<img class="cover-img" src="' + esc(b.portadaUrl) + '" alt="Portada de ' + esc(b.titol || 'llibre') + '">' +
-      '</div>';
+    var zona = document.createElement('div');
+    zona.className = 'image-zone cover-real cover-bg';
+    zona.style.backgroundImage = 'url("' + String(b.portadaUrl).replace(/"/g, '%22') + '")';
+    zona.setAttribute('aria-label', 'Portada de ' + (b.titol || 'llibre'));
+
+    contenidor.innerHTML = '';
+    contenidor.appendChild(zona);
   };
 
   portada.onerror = function() {
