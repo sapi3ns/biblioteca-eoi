@@ -344,7 +344,7 @@ body {
 .image-zone.cover-real img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -648,13 +648,15 @@ body {
 .mb-book-cover.real-cover {
   padding: 0;
   background: #eef4fb;
+  display: grid;
+  place-items: center;
 }
 
 .mb-book-cover.real-cover img {
   width: 100%;
   height: 100%;
-  min-height: 390px;
-  object-fit: cover;
+  min-height: 0;
+  object-fit: contain;
   display: block;
 }
 
@@ -3980,7 +3982,7 @@ body {
 </div>
 
 <script>
-var CATALOGO_VERSION = '20260623-portadas-v4';
+var CATALOGO_VERSION = '20260623-portadas-v5';
 var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json?v=' + CATALOGO_VERSION;
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrQmSmjQrgPlKhTK1pBMJNISdac8t8Drp-Y3Vx1DHa4TpOMBp8Jwzu2Cd7ijCSLPJc/exec';
 var TOTS = [];
