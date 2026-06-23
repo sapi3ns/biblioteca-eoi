@@ -4029,8 +4029,8 @@ body {
 </div>
 
 <script>
-var CATALOGO_VERSION = '20260623-portadas-v8';
-var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json?v=' + CATALOGO_VERSION;
+var CATALOGO_VERSION = '20260623-portadas-v9-json-fresco';
+var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json?v=' + CATALOGO_VERSION + '-' + Date.now();
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrQmSmjQrgPlKhTK1pBMJNISdac8t8Drp-Y3Vx1DHa4TpOMBp8Jwzu2Cd7ijCSLPJc/exec';
 var TOTS = [];
 var FILTRATS = [];
@@ -4069,11 +4069,12 @@ function trim(s) {
 function portadaDesdeLibro(b) {
   var portada = trim(b.portadaUrl || b['Portada URL'] || '');
   var isbn = trim(b.isbn || b['ISBN / Codi barres'] || b.codigoBarras || '');
+  var isbnLimpio = isbn.replace(/[^0-9Xx]/g, '');
 
   if (portada) return portada;
   if (!isbn) return '';
 
-  return 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(isbn) + '-L.jpg?default=false';
+  return 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(isbnLimpio || isbn) + '-L.jpg?default=false';
 }
 
 function cargarCatalogo() {
