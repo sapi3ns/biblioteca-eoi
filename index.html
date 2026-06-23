@@ -3980,7 +3980,7 @@ body {
 </div>
 
 <script>
-var CATALOGO_VERSION = '20260622-portadas-v3';
+var CATALOGO_VERSION = '20260623-portadas-v4';
 var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json?v=' + CATALOGO_VERSION;
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrQmSmjQrgPlKhTK1pBMJNISdac8t8Drp-Y3Vx1DHa4TpOMBp8Jwzu2Cd7ijCSLPJc/exec';
 var TOTS = [];
@@ -4406,6 +4406,25 @@ function crearImagenAutomaticaHtml(b) {
   return html;
 }
 
+function activarPortadaQuanCarregui(contenidor, b) {
+  if (!contenidor || !b || !b.portadaUrl) return;
+
+  var portada = new Image();
+
+  portada.onload = function() {
+    contenidor.innerHTML =
+      '<div class="image-zone cover-real">' +
+        '<img class="cover-img" src="' + esc(b.portadaUrl) + '" alt="Portada de ' + esc(b.titol || 'llibre') + '">' +
+      '</div>';
+  };
+
+  portada.onerror = function() {
+    contenidor.innerHTML = crearImagenAutomaticaHtml(b);
+  };
+
+  portada.src = b.portadaUrl;
+}
+
 function crearCard(b) {
   var card = document.createElement('article');
   card.className = 'card';
@@ -4413,13 +4432,9 @@ function crearCard(b) {
   var disp = b.disponible;
 
   var html = '';
-  if (b.portadaUrl) {
-    html += '<div class="image-zone cover-real">';
-    html += '<img class="cover-img" src="' + esc(b.portadaUrl) + '" alt="Portada de ' + esc(b.titol || 'llibre') + '">';
-    html += '</div>';
-  } else {
-    html += crearImagenAutomaticaHtml(b);
-  }
+  html += '<div class="card-cover-slot">';
+  html += crearImagenAutomaticaHtml(b);
+  html += '</div>';
 
   html += '<div class="card-body">';
   html += '<div class="ref">Ref: ' + esc(b.codi) + '</div>';
@@ -4446,13 +4461,7 @@ function crearCard(b) {
 
   card.innerHTML = html;
 
-  var coverImg = card.querySelector('.cover-img');
-  if (coverImg) {
-    coverImg.onerror = function() {
-      var zone = coverImg.parentNode;
-      if (zone) zone.outerHTML = crearImagenAutomaticaHtml(b);
-    };
-  }
+  activarPortadaQuanCarregui(card.querySelector('.card-cover-slot'), b);
 
   var btn = card.getElementsByTagName('button')[0];
 
