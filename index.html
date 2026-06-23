@@ -3760,6 +3760,43 @@ body {
   }
 }
 
+/* Portadas reales: deben verse como portada completa, no como banner. */
+.card.has-real-cover .image-zone.cover-real {
+  height: 330px !important;
+  padding: 12px !important;
+  background: #f4f8fc !important;
+}
+
+.card.has-real-cover .image-zone.cover-real img,
+.mb-book-cover.real-cover img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+.mb-book-cover.real-cover {
+  min-height: 430px !important;
+  padding: 12px !important;
+  background: #f4f8fc !important;
+}
+
+@media screen and (max-width: 760px) {
+  .card.has-real-cover .image-zone.cover-real {
+    height: 300px !important;
+  }
+
+  .mb-book-cover.real-cover {
+    min-height: 360px !important;
+  }
+}
+
+@media screen and (min-width: 1181px) {
+  .card.has-real-cover .image-zone.cover-real {
+    height: 340px !important;
+  }
+}
+
 </style>
 </head>
 
@@ -3982,7 +4019,7 @@ body {
 </div>
 
 <script>
-var CATALOGO_VERSION = '20260623-portadas-v5';
+var CATALOGO_VERSION = '20260623-portadas-v6';
 var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json?v=' + CATALOGO_VERSION;
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrQmSmjQrgPlKhTK1pBMJNISdac8t8Drp-Y3Vx1DHa4TpOMBp8Jwzu2Cd7ijCSLPJc/exec';
 var TOTS = [];
@@ -4429,7 +4466,7 @@ function activarPortadaQuanCarregui(contenidor, b) {
 
 function crearCard(b) {
   var card = document.createElement('article');
-  card.className = 'card';
+  card.className = 'card' + (b.portadaUrl ? ' has-real-cover' : '');
 
   var disp = b.disponible;
 
