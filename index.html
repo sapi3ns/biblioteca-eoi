@@ -4460,18 +4460,27 @@ function activarPortadaQuanCarregui(contenidor, b) {
   if (!contenidor || !b || !b.portadaUrl) return;
 
   var portada = new Image();
+  var card = contenidor.parentNode;
 
   portada.onload = function() {
     var zona = document.createElement('div');
-    zona.className = 'image-zone cover-real cover-bg';
-    zona.style.backgroundImage = 'url("' + String(b.portadaUrl).replace(/"/g, '%22') + '")';
+    zona.className = 'image-zone cover-real';
     zona.setAttribute('aria-label', 'Portada de ' + (b.titol || 'llibre'));
+    portada.alt = 'Portada de ' + (b.titol || 'llibre');
 
     contenidor.innerHTML = '';
+    zona.appendChild(portada);
     contenidor.appendChild(zona);
+
+    if (card && card.classList) {
+      card.classList.add('has-real-cover');
+    }
   };
 
   portada.onerror = function() {
+    if (card && card.classList) {
+      card.classList.remove('has-real-cover');
+    }
     contenidor.innerHTML = crearImagenAutomaticaHtml(b);
   };
 
@@ -4480,7 +4489,7 @@ function activarPortadaQuanCarregui(contenidor, b) {
 
 function crearCard(b) {
   var card = document.createElement('article');
-  card.className = 'card' + (b.portadaUrl ? ' has-real-cover' : '');
+  card.className = 'card';
 
   var disp = b.disponible;
 
