@@ -4031,8 +4031,8 @@ body {
 </div>
 
 <script>
-var CATALOGO_VERSION = '20260623-portadas-v9-json-fresco';
-var CATALOGO_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json?v=' + CATALOGO_VERSION + '-' + Date.now();
+var CATALOGO_VERSION = '20260624-isbn-200-cache-fiable';
+var CATALOGO_BASE_URL = 'https://sapi3ns.github.io/biblioteca-eoi/catalogo.json';
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrQmSmjQrgPlKhTK1pBMJNISdac8t8Drp-Y3Vx1DHa4TpOMBp8Jwzu2Cd7ijCSLPJc/exec';
 var TOTS = [];
 var FILTRATS = [];
@@ -4081,7 +4081,14 @@ function portadaDesdeLibro(b) {
 
 function cargarCatalogo() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', CATALOGO_URL, true);
+  var catalogoUrl =
+    CATALOGO_BASE_URL +
+    '?v=' +
+    encodeURIComponent(CATALOGO_VERSION) +
+    '-' +
+    Date.now();
+
+  xhr.open('GET', catalogoUrl, true);
 
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
