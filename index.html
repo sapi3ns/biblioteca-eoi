@@ -301,7 +301,7 @@ body {
 
 .card {
   flex: 0 0 340px;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   background: white;
   border: 1px solid #e2ebf5;
   border-radius: 28px;
@@ -3775,8 +3775,10 @@ body {
 
 .card.has-real-cover .image-zone.cover-real img,
 .mb-book-cover.real-cover img {
-  width: 100% !important;
-  height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
   object-fit: contain !important;
   object-position: center center !important;
 }
@@ -3799,7 +3801,7 @@ body {
 
 @media screen and (min-width: 1181px) {
   .card.has-real-cover {
-    flex-basis: 310px !important;
+    flex-basis: 340px !important;
   }
 
   .card.has-real-cover .image-zone.cover-real {
@@ -4493,6 +4495,9 @@ function activarPortadaQuanCarregui(contenidor, b) {
     contenidor.innerHTML = '';
     zona.appendChild(portada);
     contenidor.appendChild(zona);
+    window.requestAnimationFrame(function() {
+      ajustarTamanoPortada_(portada, zona, 2);
+    });
 
     if (card && card.classList) {
       card.classList.add('has-real-cover');
@@ -4507,6 +4512,62 @@ function activarPortadaQuanCarregui(contenidor, b) {
   };
 
   portada.src = b.portadaUrl;
+}
+
+function ajustarTamanoPortada_(imagen, contenedor, ampliacionMaxima) {
+  if (!imagen || !contenedor || !imagen.naturalWidth || !imagen.naturalHeight) return;
+
+  var anchoDisponible = contenedor.clientWidth || imagen.naturalWidth;
+  var altoDisponible = contenedor.clientHeight || imagen.naturalHeight;
+  var escala = Math.min(
+    anchoDisponible / imagen.naturalWidth,
+    altoDisponible / imagen.naturalHeight,
+    ampliacionMaxima || 1
+  );
+
+  imagen.style.setProperty('width', Math.max(1, Math.round(imagen.naturalWidth * escala)) + 'px', 'important');
+  imagen.style.setProperty('height', Math.max(1, Math.round(imagen.naturalHeight * escala)) + 'px', 'important');
+}
+
+function pintarPortadaModalAutomatica_(modalCover, b, coverClass, estado) {
+  modalCover.className = coverClass;
+  modalCover.innerHTML = '' +
+    '<span class="mb-cover-badge" id="modalCoverBadge"></span>' +
+    '<div class="mb-cover-circle"></div>' +
+    '<div class="mb-cover-lines">' +
+      '<div class="a"></div>' +
+      '<div class="b"></div>' +
+      '<div class="c"></div>' +
+    '</div>' +
+    '<div class="mb-cover-text">' +
+      '<div class="mb-cover-ref" id="modalCoverRef"></div>' +
+      '<div class="mb-cover-title" id="modalCoverTitle"></div>' +
+    '</div>';
+  document.getElementById('modalCoverBadge').innerHTML = esc(idiomaModalTexto(b) + ' · ' + estado);
+  document.getElementById('modalCoverRef').innerHTML = 'Ref: ' + esc(b.codi || '—');
+  document.getElementById('modalCoverTitle').innerHTML = esc(b.titol || 'Sense títol');
+}
+
+function carregarPortadaModal_(modalCover, b, coverClass, estado) {
+  pintarPortadaModalAutomatica_(modalCover, b, coverClass, estado);
+
+  if (!b.portadaUrl) return;
+
+  var imagen = new Image();
+
+  imagen.onload = function() {
+    modalCover.className = 'mb-book-cover real-cover';
+    modalCover.innerHTML = '';
+    imagen.alt = 'Portada de ' + (b.titol || 'llibre');
+    modalCover.appendChild(imagen);
+    ajustarTamanoPortada_(imagen, modalCover, 2);
+  };
+
+  imagen.onerror = function() {
+    pintarPortadaModalAutomatica_(modalCover, b, coverClass, estado);
+  };
+
+  imagen.src = b.portadaUrl;
 }
 
 function crearCard(b) {
@@ -4610,22 +4671,44 @@ function moverCarrusel(dir) {
   var c = document.getElementById('carousel');
   if (!c) return;
 
-  var avance = c.clientWidth;
+  var cards = c.querySelectorAll('.card');
+  if (!cards.length) return;
 
-  if (!avance || avance < 300) {
-    avance = 370;
+  var izquierdaCarrusel = c.getBoundingClientRect().left;
+  var indiceActual = 0;
+  var distanciaMinima = Infinity;
+
+  for (var i = 0; i < cards.length; i++) {
+    var distancia = Math.abs(cards[i].getBoundingClientRect().left - izquierdaCarrusel);
+    if (distancia < distanciaMinima) {
+      distanciaMinima = distancia;
+      indiceActual = i;
+    }
   }
+
+  var indiceDestino = Math.max(
+    0,
+    Math.min(cards.length - 1, indiceActual + (dir * 3))
+  );
 
   var antes = c.scrollLeft;
   var maxAntes = c.scrollWidth - c.clientWidth;
-  var yaEnFinal = dir > 0 && antes >= maxAntes - 12;
+  var yaEnFinal = dir > 0 && indiceActual >= cards.length - 3 && antes >= maxAntes - 12;
 
   if (yaEnFinal && MOSTRATS.length < FILTRATS.length) {
     carregarMesLlibres('flecha');
     return;
   }
 
-  c.scrollLeft += dir * avance;
+  var destino =
+    cards[indiceDestino].getBoundingClientRect().left -
+    izquierdaCarrusel +
+    c.scrollLeft;
+
+  c.scrollTo({
+    left: destino,
+    behavior: 'smooth'
+  });
 
   if (dir > 0) {
     setTimeout(function() {
@@ -4719,27 +4802,7 @@ function obrirModal(b) {
   var estado = b.disponible ? 'Disponible' : 'No disponible';
   var modalCover = document.getElementById('modalBookCover');
 
-  if (b.portadaUrl) {
-    modalCover.className = 'mb-book-cover real-cover';
-    modalCover.innerHTML = '<img src="' + esc(b.portadaUrl) + '" alt="Portada de ' + esc(b.titol || 'llibre') + '">';
-  } else {
-    modalCover.className = coverClass;
-    modalCover.innerHTML = '' +
-      '<span class="mb-cover-badge" id="modalCoverBadge"></span>' +
-      '<div class="mb-cover-circle"></div>' +
-      '<div class="mb-cover-lines">' +
-        '<div class="a"></div>' +
-        '<div class="b"></div>' +
-        '<div class="c"></div>' +
-      '</div>' +
-      '<div class="mb-cover-text">' +
-        '<div class="mb-cover-ref" id="modalCoverRef"></div>' +
-        '<div class="mb-cover-title" id="modalCoverTitle"></div>' +
-      '</div>';
-    document.getElementById('modalCoverBadge').innerHTML = esc(idiomaModalTexto(b) + ' · ' + estado);
-    document.getElementById('modalCoverRef').innerHTML = 'Ref: ' + esc(b.codi || '—');
-    document.getElementById('modalCoverTitle').innerHTML = esc(b.titol || 'Sense títol');
-  }
+  carregarPortadaModal_(modalCover, b, coverClass, estado);
 
   document.getElementById('modalBookTitle').innerHTML = esc(b.titol || 'Sense títol');
   document.getElementById('modalBookAuthor').innerHTML = esc(b.autor || 'Autor/a no indicat');
@@ -5004,7 +5067,6 @@ document.getElementById('modalOverlay').onclick = function(e) {
 };
 
 cargarCatalogo();
-prepararFletxesContinu();
 
 function mostrarConfirmacio(b, numeroSolicitud) {
   document.body.style.overflow = 'hidden';
